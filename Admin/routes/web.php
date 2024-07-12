@@ -22,6 +22,14 @@ Route::get('/', function (){
     return view('Home');
 })->middleware(['auth', 'verified','admin'])->name('Home');
 
+Route::get('/Utilisateur-page', function (){
+    return view('Utilisateurs');
+})->middleware(['auth', 'verified','admin'])->name('Utilisateur');
+
+Route::get('/Ajout-Utilisateur-page', function (){
+    return view('AddUsers');
+})->middleware(['auth', 'verified','admin'])->name('AddUsers');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
