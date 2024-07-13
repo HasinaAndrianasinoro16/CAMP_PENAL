@@ -22,13 +22,13 @@ Route::get('/', function (){
     return view('Home');
 })->middleware(['auth', 'verified','admin'])->name('Home');
 
-Route::get('/Utilisateur-page', function (){
-    return view('Utilisateurs');
-})->middleware(['auth', 'verified','admin'])->name('Utilisateur');
+Route::get('/Utilisateur-page',[\App\Http\Controllers\UsersController::class,'Utilisateur'])->middleware(['auth', 'verified','admin'])->name('Utilisateur');
 
 Route::get('/Ajout-Utilisateur-page', function (){
     return view('AddUsers');
 })->middleware(['auth', 'verified','admin'])->name('AddUsers');
+
+Route::get('/Delete-users/{id?}',[\App\Http\Controllers\UsersController::class,'DeleteUsers'])->middleware(['auth', 'verified','admin'])->name('DeleteUsers');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

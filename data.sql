@@ -28,6 +28,14 @@ create table province(
 ALTER TABLE users ADD COLUMN province INT;
 ALTER TABLE users ADD CONSTRAINT fk_province FOREIGN KEY (province) REFERENCES province(id);
 
+--les poste possible
+-- create table position(
+--     id serial primary key,
+--     nom varchar(50)
+-- );
+-- alter table users add column usertype int;
+-- alter table users add constraint fk_position FOREIGN key (position) references position(id);
+
 -- --les utilisateurs par province
 -- create table ProvinceUtilisateur(
 --     id serial,
@@ -81,3 +89,19 @@ INSERT INTO sol (nom) VALUES
 ('Alluviaux'),
 ('Argilo-sableux');
 --============================== View et fonction ===============================
+create or replace View as 
+select 
+    u.id,
+    u.name,
+    u.email,
+    u.usertype,
+    case
+        when usertype < 1 then 'Administrateur'
+        when usertype = 1 then 'D.I.R.A.P'
+        when usertype > 1 then 'Agent du ministere'
+        else null
+    end as position,
+    u.province as is_province,
+    p.nom as province
+from users u
+join province p on p.id = u.province;
