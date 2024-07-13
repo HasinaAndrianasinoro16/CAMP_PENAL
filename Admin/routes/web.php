@@ -14,22 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified','admin'])->name('dashboard');
+//GET METHODE
+//Route::get('/dashboard', function () {
+//    return view('dashboard');
+//})->middleware(['auth', 'verified','admin'])->name('dashboard');
 
-Route::get('/', function (){
-    return view('Home');
-})->middleware(['auth', 'verified','admin'])->name('Home');
+Route::get('/', [\App\Http\Controllers\UsersController::class,'Home'])->middleware(['auth', 'verified','admin'])->name('Home');
 
 Route::get('/Utilisateur-page',[\App\Http\Controllers\UsersController::class,'Utilisateur'])->middleware(['auth', 'verified','admin'])->name('Utilisateur');
 
-Route::get('/Ajout-Utilisateur-page', function (){
-    return view('AddUsers');
-})->middleware(['auth', 'verified','admin'])->name('AddUsers');
+Route::get('/Ajout-Utilisateur-page',[\App\Http\Controllers\UsersController::class,'Addusers'])->middleware(['auth', 'verified','admin'])->name('AddUsers');
 
 Route::get('/Delete-users/{id?}',[\App\Http\Controllers\UsersController::class,'DeleteUsers'])->middleware(['auth', 'verified','admin'])->name('DeleteUsers');
 
+//POST METHODE
+Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormAddUsers'])->middleware(['auth', 'verified','admin'])->name('FormAddUsers');
+
+
+//AUTRE
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

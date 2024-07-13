@@ -11,7 +11,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-title h3">Ajouter Utilisateur</div>
-                    <form action="#" method="post">
+                    <form action="{{ route('FormAddUsers') }}" method="post">
                         @csrf
                         <div class="card-body card-block">
                             <div class="form-group">
@@ -36,14 +36,16 @@
                                 <div class="col-9">
                                     <label for="province" class="form-control-label">Province</label>
                                     <select id="province" name="province" class="form-control">
-                                        <option value="1">Antananarivo</option>
+                                        @foreach($provinces as $province)
+                                            <option value="{{ $province->id }}">{{ $province->nom }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-9">
                                     <label for="Position" class="form-control-label">Position</label>
-                                    <select id="Position" name="Position" class="form-control">
+                                    <select id="Position" name="position" class="form-control">
                                         <option value="1">D.I.R.A.P</option>
                                         <option value="2">Agent du Ministere</option>
                                     </select>

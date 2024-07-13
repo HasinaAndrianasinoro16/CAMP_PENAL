@@ -19,7 +19,7 @@
                                 <i class="zmdi zmdi-account-o"></i>
                             </div>
                             <div class="text">
-                                <h2>10368</h2>
+                                <h2>{{ str_replace(',','.',$dirap) }}</h2>
                                 <span>Utilisateur D.I.R.A.P</span>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                                 <i class="zmdi zmdi-account-o"></i>
                             </div>
                             <div class="text">
-                                <h2>388,688</h2>
+                                <h2>{{ str_replace(',','.',$ministere) }}</h2>
                                 <span>Agent du ministere</span>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                                 <i class="fas fa-leaf"></i>
                             </div>
                             <div class="text">
-                                <h2>1,086</h2>
+                                <h2>{{ str_replace(',','.',$camp) }}</h2>
                                 <span>Camp penal</span>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                         <code>Utilisateurs D.I.R.A.P</code>
                         qui sont les responsables de chaque camp penal et
                         <code>Agent Ministere</code>
-                        qui sont les responsable de chaque action
+                        qui sont les responsable d'envoyer les rapports et details de plus
                         <code>Camp penal</code>
                         le nombre de camp penal enregistre.
                     </p>

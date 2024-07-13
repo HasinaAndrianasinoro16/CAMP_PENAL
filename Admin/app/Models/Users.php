@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use function Laravel\Prompts\table;
 
 class Users extends Model
@@ -20,7 +21,7 @@ class Users extends Model
             $users = new Users();
             $users->name = $name;
             $users->email = $email;
-            $users->passwprd = $password;
+            $users->password = Hash::make($password);
             $users->usertype = $usertype;
             $users->province = $province;
             $users->save();
@@ -29,6 +30,7 @@ class Users extends Model
             throw new \Exception( $e->getMessage());
         }
     }
+
 //    fonction pour supprimer un utilisateur
     public static function deleteUsers($id)
     {
@@ -50,6 +52,7 @@ class Users extends Model
             throw new \Exception($exception->getMessage());
         }
     }
+
 
 
     use HasFactory;
