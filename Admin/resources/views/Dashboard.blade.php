@@ -90,7 +90,7 @@
                             <i class="far fa-check-square"></i>Camp penal</a>
                     </li>
                     <li>
-                        <a href="map.html">
+                        <a href="{{ route('Carte') }}">
                             <i class="fas fa-map-marker-alt"></i>Carte</a>
                     </li>
                 </ul>
@@ -140,7 +140,7 @@
                             <i class="far fa-check-square"></i>Camp penal</a>
                     </li>
                     <li>
-                        <a href="map.html">
+                        <a href="{{ route('Carte') }}">
                             <i class="fas fa-map-marker-alt"></i>Carte</a>
                     </li>
 
