@@ -31,7 +31,6 @@
     <link href="{{ asset('assets/vendor/slick/slick.css') }}" rel="stylesheet" media="all">
     <link href="{{ asset('assets/vendor/select2/select2.min.css') }}" rel="stylesheet" media="all">
     <link href="{{ asset('assets/vendor/perfect-scrollbar/perfect-scrollbar.css') }}" rel="stylesheet" media="all">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link href="{{ asset('assets/vendor/simple-datatables/style.css') }}" rel="stylesheet">
 
     <!-- Main CSS-->
@@ -87,7 +86,7 @@
                             <i class="fas fa-user"></i>Utilisateurs</a>
                     </li>
                     <li>
-                        <a href="form.html">
+                        <a href="{{ route('Camp') }}">
                             <i class="far fa-check-square"></i>Camp penal</a>
                     </li>
                     <li>
@@ -137,7 +136,7 @@
                             <i class="fas fa-user"></i>Utilisateurs</a>
                     </li>
                     <li>
-                        <a href="form.html">
+                        <a href="{{ route('Camp') }}">
                             <i class="far fa-check-square"></i>Camp penal</a>
                     </li>
                     <li>
@@ -248,7 +247,6 @@
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
 <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 </body>
 

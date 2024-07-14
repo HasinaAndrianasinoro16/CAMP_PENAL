@@ -27,6 +27,8 @@ Route::get('/Ajout-Utilisateur-page',[\App\Http\Controllers\UsersController::cla
 
 Route::get('/Delete-users/{id?}',[\App\Http\Controllers\UsersController::class,'DeleteUsers'])->middleware(['auth', 'verified','admin'])->name('DeleteUsers');
 
+Route::get('/Camp-penal-page',[\App\Http\Controllers\CampController::class,'Camp'])->middleware(['auth', 'verified','admin'])->name('Camp');
+
 //POST METHODE
 Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormAddUsers'])->middleware(['auth', 'verified','admin'])->name('FormAddUsers');
 
