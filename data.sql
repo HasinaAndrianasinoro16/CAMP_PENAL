@@ -89,7 +89,7 @@ INSERT INTO sol (nom) VALUES
 ('Alluviaux'),
 ('Argilo-sableux');
 --============================== View et fonction ===============================
-create or replace View as 
+create or replace View v_user as 
 select 
     u.id,
     u.name,
@@ -105,3 +105,15 @@ select
     p.nom as province
 from users u
 join province p on p.id = u.province;
+
+create or replace view v_camp as
+select 
+    c.id,
+    c.nom,
+    c.supeficie as superficie,
+    c.province as id_province,
+    p.nom as province,
+    c.lattitude as lat,
+    c.longitude as lng
+from camp c
+join province p on p.id = c.province;

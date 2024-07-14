@@ -17,13 +17,13 @@
                     <div class="card-title h3">Ajouter un nouveau camp penal</div>
                     <div class="row">
                         <div class="col-lg-6">
-                            <form action="# " method="post">
+                            <form action="{{ route('form_camp_penal') }}" method="post">
                                 @csrf
                                 <div class="card-body card-block">
                                     <div class="form-group">
                                         <div class="col-11">
                                             <label for="Nom" class="form-control-label">Nom</label>
-                                            <input type="text" id="Nom" name="name" placeholder="Entrer le nom" class="form-control">
+                                            <input type="text" id="Nom" name="nom" placeholder="Entrer le nom" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -47,11 +47,11 @@
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <label for="lat" class="form-control-label">Lattitude</label>
-                                                    <input type="number" id="lat" name="lat" placeholder="-0.5978" class="form-control">
+                                                    <input type="text" id="lat" name="lat" placeholder="-0.5978" class="form-control">
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <label for="lng" class="form-control-label">longitude</label>
-                                                    <input type="number" id="lng" name="lng" placeholder="1.125" class="form-control">
+                                                    <input type="text" id="lng" name="lng" placeholder="1.125" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -91,7 +91,7 @@
         }
 
         // Initialisation de la carte
-        var map = L.map('map').setView([51.505, -0.09], 13);
+        var map = L.map('map').setView([-20.0000, 47.0000], 13);
 
         // Ajout de la couche de tuiles OpenStreetMap
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {

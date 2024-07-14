@@ -31,10 +31,11 @@ Route::get('/Camp-penal-page',[\App\Http\Controllers\CampController::class,'Camp
 
 Route::get('/Camp-penal-Carte',[\App\Http\Controllers\CampController::class,'Carte'])->middleware(['auth', 'verified','admin'])->name('Carte');
 
+Route::get('/Delete-camp-penal/{id?}',[\App\Http\Controllers\CampController::class,'DeleteCamp'])->middleware(['auth', 'verified','admin'])->name('DeleteCamp');
 //POST METHODE
 Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormAddUsers'])->middleware(['auth', 'verified','admin'])->name('FormAddUsers');
 
-
+Route::post('/Ajout-camp-penal',[\App\Http\Controllers\CampController::class,'form_camp_penal'])->middleware(['auth', 'verified','admin'])->name('form_camp_penal');
 //AUTRE
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

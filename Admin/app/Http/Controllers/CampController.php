@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Camp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +23,35 @@ class CampController extends Controller
     public function Carte()
     {
         try {
-            return view('Map');
+            $camp = DB::table('v_camp')->get();
+            return view('Map')->with('camps', $camp);
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    //controller pour le formulaire d'ajout de camp penal
+    public function form_camp_penal(Request $request){
+        try {
+            $request->validate([
+                'nom' => 'required|max:255',
+                'superficie' => 'required',
+                'province' => 'required',
+                'lat' => 'required',
+                'lng' => 'required',
+            ]);
+            Camp::SaveCamp(\request('nom'),request('superficie'),request('province'),request('lat'),request('lng'));
+            return redirect()->route('Carte');
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    public function DeleteCamp($id)
+    {
+        try {
+            DB::table('camp')->where('id', $id)->delete();
+            return redirect()->back();
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }

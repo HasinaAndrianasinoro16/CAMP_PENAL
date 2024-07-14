@@ -87,7 +87,7 @@
                     </li>
                     <li>
                         <a href="{{ route('Camp') }}">
-                            <i class="far fa-check-square"></i>Camp penal</a>
+                            <i class="fas fa-leaf"></i>Camp penal</a>
                     </li>
                     <li>
                         <a href="{{ route('Carte') }}">
@@ -137,7 +137,7 @@
                     </li>
                     <li>
                         <a href="{{ route('Camp') }}">
-                            <i class="far fa-check-square"></i>Camp penal</a>
+                            <i class="fas fa-leaf"></i>Camp penal</a>
                     </li>
                     <li>
                         <a href="{{ route('Carte') }}">
@@ -247,6 +247,7 @@
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script src="{{ asset('assets/vendor/simple-datatables/simple-datatables.js') }}"></script>
 <script src="{{ asset('assets/vendor/tinymce/tinymce.min.js') }}"></script>
+
 
 </body>
 
