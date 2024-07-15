@@ -20,7 +20,7 @@ class Users extends Model
         try {
             $users = new Users();
             $users->name = $name;
-            $users->imaticule = $imatricule;
+            $users->imatricule = $imatricule;
             $users->email = $email;
             $users->password = Hash::make($password);
             $users->usertype = $usertype;
@@ -49,6 +49,37 @@ class Users extends Model
             $users = DB::table('v_user')->where('usertype','>',0)->get();
 //            $users = DB::table('v_user')->get();
             return $users;
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    //fonction pour recuperer les utilisateur avec leur id
+    public static function getUsersById($id)
+    {
+        try {
+            $users = DB::table('v_user')->where('id','=',$id)->get();
+            return $users;
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    //fonction pour faire la modification des informations de l'utilisateur
+    public static function UpdateUsers ($id,$name,$imatricule, $email, $password, $province, $usertype)
+    {
+        try {
+            $pass = Hash::make($password);
+            $update = DB::table('users')->where('id','=',$id)->
+                update([
+                    'name' => $name,
+                    'imatricule' => $imatricule,
+                    'email' => $email,
+                    'password' => $pass,
+                    'usertype' => $usertype,
+                    'province' => $province,
+                ]);
+            return $update;
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }

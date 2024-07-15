@@ -27,6 +27,7 @@
                                         <th>Nom</th>
                                         <th>Superficie (m<sup>2</sup>)</th>
                                         <th>Province</th>
+                                        <th>type de terre</th>
                                         <th> -- </th>
                                     </tr>
                                     </thead>
@@ -36,6 +37,7 @@
                                             <td>{{ $camp->nom }}</td>
                                             <td>{{ $camp->superficie }}</td>
                                             <td>{{ $camp->province }}</td>
+                                            <td>{{ $camp->sol }}</td>
                                             <td>
                                                 <a href="{{ route('DeleteCamp',['id' => $camp->id]) }}"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>
                                             </td>
@@ -74,7 +76,7 @@
         }).addTo(map);
 
         @foreach($camps as $camp)
-            L.marker([{{ $camp->lat }}, {{ $camp->lng }}]).addTo(map).bindPopup("<b>{{ $camp->nom }}</b><br>{{ $camp->superficie }} m<sup>2</sup>");
+            L.marker([{{ $camp->lat }}, {{ $camp->lng }}]).addTo(map).bindPopup("<b>{{ $camp->nom }}</b><br>{{ $camp->superficie }} m<sup>2</sup><br>{{ $camp->sol }}");
         @endforeach
 
     </script>

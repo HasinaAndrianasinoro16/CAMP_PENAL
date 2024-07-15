@@ -70,4 +70,36 @@ class UsersController extends Controller
             throw new \Exception($exception->getMessage());
         }
     }
+    //controller pour afficher la page de modification d'users
+    public function UpdateUsers($id)
+    {
+        try {
+            $province = DB::table('province')->get();
+            $users = DB::table('v_user')->where('id','=',$id)->first();
+            return view('UpdateUsers')->with('provinces', $province)->with('users', $users);
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    //controller pour le formulaire de modification de l'utilisateur
+    public function FormUpdateUsers(Request $request)
+    {
+        try {
+            $request->validate([
+                'name' => 'required|max:255',
+                'id' => 'required',
+                'matricule' => 'required|max:255',
+                'email' => 'required|email|max:255',
+                'password' => 'required|min:6',
+                'province' => 'required',
+                'position' => 'required',
+            ]);
+            Users::UpdateUsers(\request('id'),\request('name'),\request('matricule'),\request('email'),\request('password'),request('province'),\request('position'));
+            return redirect()->route('Utilisateur');
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
 }

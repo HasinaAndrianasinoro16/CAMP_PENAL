@@ -97,6 +97,7 @@ select
     u.id,
     u.name,
     u.email,
+    u.password,
     u.usertype,
     case
         when usertype < 1 then 'Administrateur'
@@ -117,7 +118,10 @@ select
     c.supeficie as superficie,
     c.province as id_province,
     p.nom as province,
+    s.nom as sol,
+    s.id as id_sol,
     c.lattitude as lat,
     c.longitude as lng
 from camp c
+join sol s on s.id = c.sol
 join province p on p.id = c.province;

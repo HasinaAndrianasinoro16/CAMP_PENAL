@@ -14,6 +14,7 @@ class Camp extends Model
     public $timestamps = false;
     protected $fillable = ['id','nom','supeficie','province','lattitude','longtitude'];
 
+    //fonction pour la creation d'un identifiant
     public static function getId()
     {
         try {
@@ -29,6 +30,8 @@ class Camp extends Model
             throw new \Exception($exception->getMessage());
         }
     }
+
+    //fonction pour creer un nouveau camp
     public static function SaveCamp($nom,$superficie,$province,$lattitude,$longtitude)
     {
         try {
@@ -42,6 +45,16 @@ class Camp extends Model
             $camp->save();
 
             return $camp;
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    //fonction pour recuperer un camp par son id
+    public function getCampById($id)
+    {
+        try {
+            
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }

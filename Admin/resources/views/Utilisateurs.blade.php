@@ -37,7 +37,7 @@
                                 <td>{{ $user->position }}</td>
                                 <td>{{ $user->province }}</td>
                                 <td>
-                                    <button class="btn btn-warning" ><i class="fas fa-pencil-square-o"></i></button>
+                                    <a href="{{ route('UpdateUsers', ['id' => $user->id]) }}"><button class="btn btn-warning" ><i class="fas fa-pencil-square-o"></i></button></a>
                                     <a href="{{ route('DeleteUsers',['id' => $user->id]) }}"><button class="btn btn-danger"><i class="fas fa-trash" ></i></button></a>
                                 </td>
                             </tr>
