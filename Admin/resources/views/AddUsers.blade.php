@@ -22,6 +22,12 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-9">
+                                    <label for="matricule" class="form-control-label">Numeros matricule </label>
+                                    <input type="text" id="matricule" name="matricule" placeholder="MAT00XXX" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-9">
                                     <label for="mail" class="form-control-label">Adresse electronique</label>
                                     <input type="email" id="mail" name="email" placeholder="Example@gmail.com" class="form-control">
                                 </div>
@@ -34,6 +40,12 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-9">
+                                    <label for="matricule" class="form-control-label">Numeros matricule </label>
+                                    <input type="text" id="matricule" name="matricule" placeholder="MAT00XXX" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-9">
                                     <label for="province" class="form-control-label">Province</label>
                                     <select id="province" name="province" class="form-control">
                                         @foreach($provinces as $province)
@@ -42,6 +54,7 @@
                                     </select>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-9">
                                     <label for="Position" class="form-control-label">Position</label>

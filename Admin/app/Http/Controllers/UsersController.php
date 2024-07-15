@@ -57,12 +57,13 @@ class UsersController extends Controller
         try {
             $request->validate([
                 'name' => 'required|max:255',
+                'matricule' => 'required|max:255',
                 'email' => 'required|email|max:255|unique:users',
                 'password' => 'required|min:6',
                 'province' => 'required',
                 'position' => 'required',
             ]);
-            Users::SaveUsers(request('name'),request('email'),request('password'),request('province'),request('position'));
+            Users::SaveUsers(request('name'),\request('matricule'),request('email'),request('password'),request('province'),request('position'));
 //            Users::SaveUsers(request(['name', 'email', 'password', 'province', 'position']));
             return redirect()->route('Utilisateur');
         }catch (\Exception $exception){

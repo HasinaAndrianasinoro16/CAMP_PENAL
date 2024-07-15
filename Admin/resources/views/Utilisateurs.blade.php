@@ -21,6 +21,7 @@
                         <thead>
                         <tr>
                             <th>Nom</th>
+                            <th>Imatricule</th>
                             <th>Adresse electronique</th>
                             <th>Position</th>
                             <th>Province</th>
@@ -31,11 +32,12 @@
                         @foreach($users as $user)
                             <tr>
                                 <td>{{ $user->name }}</td>
+                                <td>{{ $user->matricule }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->position }}</td>
                                 <td>{{ $user->province }}</td>
                                 <td>
-                                    {{--                                <button class="btn btn-warning" ><i class="fas fa-pencil-square-o"></i></button>--}}
+                                    <button class="btn btn-warning" ><i class="fas fa-pencil-square-o"></i></button>
                                     <a href="{{ route('DeleteUsers',['id' => $user->id]) }}"><button class="btn btn-danger"><i class="fas fa-trash" ></i></button></a>
                                 </td>
                             </tr>

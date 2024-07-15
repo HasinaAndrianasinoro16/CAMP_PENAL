@@ -5,6 +5,7 @@ create database camppenal;
 -- ajout de la table user type pour l'authentification et pour l'acces au site 0 pour Admin 1 pour dirap et 2 pour ministere
 
 --les differents type de sol a madagascar favorable au culture
+alter table users add column imatricule varchar(50);
 create table sol(
     id serial primary key,
     nom varchar(50)
@@ -53,6 +54,8 @@ create table camp(
     lattitude decimal,
     longitude decimal
 );
+ALTER TABLE camp ADD COLUMN sol INT;
+ALTER TABLE camp ADD CONSTRAINT fk_sol FOREIGN KEY (sol) REFERENCES sol(id);
 
 -- liste des cultures stocke en general
 create table stockculture(
@@ -102,7 +105,8 @@ select
         else null
     end as position,
     u.province as is_province,
-    p.nom as province
+    p.nom as province,
+    u.imatricule as matricule
 from users u
 join province p on p.id = u.province;
 
