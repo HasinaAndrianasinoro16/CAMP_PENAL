@@ -54,7 +54,8 @@ class Camp extends Model
     public function getCampById($id)
     {
         try {
-            
+            $camp = DB::table('v_camp')->where('id','=', $id)->first();
+            return $camp;
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }

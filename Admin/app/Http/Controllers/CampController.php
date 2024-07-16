@@ -46,7 +46,7 @@ class CampController extends Controller
             throw new \Exception($exception->getMessage());
         }
     }
-
+//controller pour supprimer un camp
     public function DeleteCamp($id)
     {
         try {
@@ -56,4 +56,6 @@ class CampController extends Controller
             throw new \Exception($exception->getMessage());
         }
     }
+
+    //controller pour afficher la page de modification d'un camp
 }
