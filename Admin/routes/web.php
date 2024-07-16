@@ -35,6 +35,8 @@ Route::get('/Delete-camp-penal/{id?}',[\App\Http\Controllers\CampController::cla
 
 Route::get('/Update-users-page/{id?}',[\App\Http\Controllers\UsersController::class,'UpdateUsers'])->middleware(['auth', 'verified','admin'])->name('UpdateUsers');
 
+Route::get('/Update-Map-page/{id?}',[\App\Http\Controllers\CampController::class,'UpdateCamp'])->middleware(['auth', 'verified','admin'])->name('UpdateCamp');
+
 //POST METHODE
 Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormAddUsers'])->middleware(['auth', 'verified','admin'])->name('FormAddUsers');
 

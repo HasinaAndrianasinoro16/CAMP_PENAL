@@ -58,4 +58,13 @@ class CampController extends Controller
     }
 
     //controller pour afficher la page de modification d'un camp
+    public function UpdateCamp($id)
+    {
+        try {
+            $province = DB::table('province')->get();
+            return view('UpdateMap')->with('provinces',$province);
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
 }

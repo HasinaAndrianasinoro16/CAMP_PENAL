@@ -39,6 +39,7 @@
                                             <td>{{ $camp->province }}</td>
                                             <td>{{ $camp->sol }}</td>
                                             <td>
+                                                <a href="{{ route('UpdateCamp',['id' => $camp->id]) }}"><button class="btn btn-warning"><i class="fas fa-pencil-square-o"></i> </button></a>
                                                 <a href="{{ route('DeleteCamp',['id' => $camp->id]) }}"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>
                                             </td>
                                         </tr>
