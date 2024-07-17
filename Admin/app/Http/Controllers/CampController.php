@@ -103,4 +103,14 @@ class CampController extends Controller
             throw new \Exception($exception->getMessage());
         }
     }
+
+    //controller pour afficher la page AddCulture
+    public function AddCulture()
+    {
+        try {
+            return view('AddCulture');
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
 }
