@@ -12,7 +12,7 @@ class Camp extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $timestamps = false;
-    protected $fillable = ['id','nom','supeficie','province','lattitude','longtitude'];
+    protected $fillable = ['id','nom','supeficie','province','lattitude','longtitude','sol'];
 
     //fonction pour la creation d'un identifiant
     public static function getId()
@@ -32,7 +32,7 @@ class Camp extends Model
     }
 
     //fonction pour creer un nouveau camp
-    public static function SaveCamp($nom,$superficie,$province,$lattitude,$longtitude)
+    public static function SaveCamp($nom,$superficie,$province,$lattitude,$longtitude,$sol)
     {
         try {
             $camp = new Camp();
@@ -42,6 +42,7 @@ class Camp extends Model
             $camp->province = $province;
             $camp->lattitude = $lattitude;
             $camp->longitude = $longtitude;
+            $camp->sol = $sol;
             $camp->save();
 
             return $camp;
@@ -50,8 +51,27 @@ class Camp extends Model
         }
     }
 
+    //fonction pour l'update
+    public static function UpdateCamp($id,$nom,$superficie,$province,$lattitude,$longtitude,$sol)
+    {
+        try {
+            $update = DB::table('camp')->where('id', $id)
+                ->update([
+                    'nom' => $nom,
+                    'supeficie' => $superficie,
+                    'province' => $province,
+                    'lattitude' => $lattitude,
+                    'longitude' => $longtitude,
+                    'sol' => $sol,
+                ]);
+            return $update;
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
     //fonction pour recuperer un camp par son id
-    public function getCampById($id)
+    public static function getCampById($id)
     {
         try {
             $camp = DB::table('v_camp')->where('id','=', $id)->first();

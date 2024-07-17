@@ -28,8 +28,8 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-11">
-                                            <label for="superficie" class="form-control-label">Superficie (m<sup>2</sup>)</label>
-                                            <input type="number" min="1" step="0.1" id="superficie" name="superficie" placeholder="4,1" class="form-control">
+                                            <label for="superficie" class="form-control-label">Superficie (ha)</label>
+                                            <input type="text" min="1" step="0.1" id="superficie" name="superficie" placeholder="4,1" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -38,6 +38,16 @@
                                             <select id="province" name="province" class="form-control">
                                                 @foreach($provinces as $province)
                                                     <option value="{{ $province->id }}">{{ $province->nom }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-11">
+                                            <label for="sol" class="form-control-label">Type de sol</label>
+                                            <select id="sol" name="sol" class="form-control">
+                                                @foreach($sols as $sol)
+                                                    <option value="{{ $sol->id }}">{{ $sol->nom }}</option>
                                                 @endforeach
                                             </select>
                                         </div>

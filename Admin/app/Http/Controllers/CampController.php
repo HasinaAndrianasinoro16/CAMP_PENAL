@@ -13,7 +13,8 @@ class CampController extends Controller
     {
         try {
             $province = DB::table('province')->get();
-            return view('Camp')->with('provinces', $province);
+            $sol = DB::table('sol')->get();
+            return view('Camp')->with('provinces', $province)->with('sols',$sol);
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }
@@ -39,8 +40,9 @@ class CampController extends Controller
                 'province' => 'required',
                 'lat' => 'required',
                 'lng' => 'required',
+                'sol' => 'required',
             ]);
-            Camp::SaveCamp(\request('nom'),request('superficie'),request('province'),request('lat'),request('lng'));
+            Camp::SaveCamp(\request('nom'),request('superficie'),request('province'),request('lat'),request('lng'),\request('sol'));
             return redirect()->route('Carte');
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
@@ -61,8 +63,30 @@ class CampController extends Controller
     public function UpdateCamp($id)
     {
         try {
+            $camp = Camp::getCampById($id);
             $province = DB::table('province')->get();
-            return view('UpdateMap')->with('provinces',$province);
+            $sol = DB::table('sol')->get();
+            return view('UpdateMap')->with('provinces',$province)->with('sols',$sol)->with('camps',$camp);
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    //controller pour le formulaire de modification d'un camp
+    public function FormUpdateCamp(Request $request)
+    {
+        try {
+            $request->validate([
+                'nom' => 'required|max:255',
+                'superficie' => 'required',
+                'province' => 'required',
+                'lat' => 'required',
+                'lng' => 'required',
+                'sol' => 'required',
+                'id' => 'required',
+            ]);
+            Camp::UpdateCamp(\request('id'),\request('nom'),\request('superficie'),\request('province'),\request('lat'),\request('lng'),\request('sol'));
+            return redirect()->route('Carte');
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }

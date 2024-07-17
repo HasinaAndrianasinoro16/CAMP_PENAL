@@ -12,14 +12,21 @@ create table sol(
 );
 
 -- liste des cultures pouvant etre planter dans un sol donnees
-create sequence seqculture increment by 1;
+-- create sequence seqculture increment by 1;
+-- create table culture(
+--     id varchar(255) primary key,
+--     nom varchar(50),
+--     prixunitaire numeric(10,2),
+--     sol int references sol(id)
+-- );
+
 create table culture(
     id varchar(255) primary key,
     nom varchar(50),
-    prixunitaire numeric(10,2),
-    sol int references sol(id)
+    prix numeric(10,2),
 );
 
+alter table culture add column supeficie decimal;
 --les provinces de madagascar
 create table province(
     id serial primary key,
@@ -60,6 +67,7 @@ ALTER TABLE camp ADD CONSTRAINT fk_sol FOREIGN KEY (sol) REFERENCES sol(id);
 -- liste des cultures stocke en general
 create table stockculture(
     id serial primary key,
+    camp varchar(50) references camp(id),
     culture varchar(50) references culture(id),
     quantite numeric(10,2), --en kilogramme
     datestock date,
@@ -71,7 +79,7 @@ create table stockculture(
 create table campculture(
     id serial,
     camp varchar(255) references camp(id),
-    stock int references stockculture(id)
+    culture varchar(50) references culture(id)
 );
 
 --=========================== INSERTION==============================

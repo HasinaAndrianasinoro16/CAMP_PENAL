@@ -25,7 +25,7 @@
                                     <thead>
                                     <tr>
                                         <th>Nom</th>
-                                        <th>Superficie (m<sup>2</sup>)</th>
+                                        <th>Superficie (ha)</th>
                                         <th>Province</th>
                                         <th>type de terre</th>
                                         <th> -- </th>
@@ -77,7 +77,7 @@
         }).addTo(map);
 
         @foreach($camps as $camp)
-            L.marker([{{ $camp->lat }}, {{ $camp->lng }}]).addTo(map).bindPopup("<b>{{ $camp->nom }}</b><br>{{ $camp->superficie }} m<sup>2</sup><br>{{ $camp->sol }}");
+            L.marker([{{ $camp->lat }}, {{ $camp->lng }}]).addTo(map).bindPopup("<b>{{ $camp->nom }}</b><br>{{ $camp->superficie }} ha<br>{{ $camp->sol }}");
         @endforeach
 
     </script>

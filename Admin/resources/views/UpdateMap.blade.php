@@ -7,29 +7,30 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="overview-wrap">
-                <h2 class="title-1">Camp penal</h2>
+                <h2 class="title-1">Camp pénal</h2>
             </div>
             <div class="py-3"></div>
         </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="card-title h3">Ajouter un nouveau camp penal</div>
+                    <div class="card-title h3">Modifier un camp pénal</div>
                     <div class="row">
                         <div class="col-lg-6">
-                            <form action="{{ route('form_camp_penal') }}" method="post">
+                            <form action="{{ route('ModifierCamp') }}" method="post">
                                 @csrf
                                 <div class="card-body card-block">
                                     <div class="form-group">
                                         <div class="col-11">
                                             <label for="Nom" class="form-control-label">Nom</label>
-                                            <input type="text" id="Nom" name="nom" placeholder="Entrer le nom" class="form-control">
+                                            <input type="text" id="Nom" name="nom" value="{{ $camps->nom }}" placeholder="Entrer le nom" class="form-control">
+                                            <input type="hidden" id="id" name="id" value="{{ request()->segment(2) }}">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-11">
-                                            <label for="superficie" class="form-control-label">Superficie (m<sup>2</sup>)</label>
-                                            <input type="number" min="1" step="0.1" id="superficie" name="superficie" placeholder="4,1" class="form-control">
+                                            <label for="superficie" class="form-control-label">Superficie (ha)</label>
+                                            <input type="text" min="1" step="0.1" id="superficie" value="{{ $camps->superficie }}" name="superficie" placeholder="4,1" class="form-control">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -37,7 +38,17 @@
                                             <label for="province" class="form-control-label">Province</label>
                                             <select id="province" name="province" class="form-control">
                                                 @foreach($provinces as $province)
-                                                    <option value="{{ $province->id }}">{{ $province->nom }}</option>
+                                                    <option value="{{ $province->id }}" {{ $province->id == $camps->id_province ? 'selected' : '' }}>{{ $province->nom }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-11">
+                                            <label for="sol" class="form-control-label">Type de sol</label>
+                                            <select id="sol" name="sol" class="form-control">
+                                                @foreach($sols as $sol)
+                                                    <option value="{{ $sol->id }}" {{ $sol->id == $camps->id_sol ? 'selected' : '' }}>{{ $sol->nom }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -46,12 +57,12 @@
                                         <div class="col-11">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <label for="lat" class="form-control-label">Lattitude</label>
-                                                    <input type="text" id="lat" name="lat" placeholder="-0.5978" class="form-control">
+                                                    <label for="lat" class="form-control-label">Latitude</label>
+                                                    <input type="text" id="lat" name="lat" value="{{ $camps->lat }}" placeholder="-0.5978" class="form-control">
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <label for="lng" class="form-control-label">longitude</label>
-                                                    <input type="text" id="lng" name="lng" placeholder="1.125" class="form-control">
+                                                    <label for="lng" class="form-control-label">Longitude</label>
+                                                    <input type="text" id="lng" name="lng" value="{{ $camps->lng }}" placeholder="1.125" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
@@ -91,7 +102,7 @@
         }
 
         // Initialisation de la carte
-        var map = L.map('map').setView([-20.0000, 47.0000], 13);
+        var map = L.map('map').setView([{{ $camps->lat }}, {{ $camps->lng }}], 13);
 
         // Ajout de la couche de tuiles OpenStreetMap
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -99,38 +110,12 @@
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
+        // Ajouter un marqueur à la position du camp
+        var marker = L.marker([{{ $camps->lat }}, {{ $camps->lng }}]).addTo(map)
+            .bindPopup("Ici se situe le camp.")
+            .openPopup();
+
         // Gestionnaire d'événements pour les clics sur la carte
         map.on('click', onMapClick);
-
-        // Fonction pour centrer la carte sur la position de l'utilisateur
-        function centerMapOnUserPosition(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
-            var userLatLng = [lat, lng];
-
-            // Centrer la carte sur la position de l'utilisateur
-            map.setView(userLatLng, 13);
-
-            // Ajouter un marqueur à la position de l'utilisateur
-            L.marker(userLatLng).addTo(map)
-                .bindPopup("Vous êtes ici.")
-                .openPopup();
-
-            // Mettre à jour les inputs avec la position de l'utilisateur
-            document.getElementById('lat').value = lat;
-            document.getElementById('lng').value = lng;
-        }
-
-        // Gestionnaire d'erreurs pour la géolocalisation
-        function handleGeolocationError(error) {
-            console.error("Erreur de géolocalisation : " + error.message);
-        }
-
-        // Demander la position de l'utilisateur
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(centerMapOnUserPosition, handleGeolocationError);
-        } else {
-            console.error("La géolocalisation n'est pas supportée par ce navigateur.");
-        }
     </script>
 @endsection

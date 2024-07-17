@@ -43,6 +43,8 @@ Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::cl
 Route::post('/Ajout-camp-penal',[\App\Http\Controllers\CampController::class,'form_camp_penal'])->middleware(['auth', 'verified','admin'])->name('form_camp_penal');
 
 Route::post('/Modifier-Utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormUpdateUsers'])->middleware(['auth', 'verified','admin'])->name('ModifierUsers');
+
+Route::post('/Modifier-Camp-form',[\App\Http\Controllers\CampController::class,'FormUpdateCamp'])->middleware(['auth', 'verified','admin'])->name('ModifierCamp');
 //AUTRE
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
