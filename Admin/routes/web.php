@@ -37,6 +37,8 @@ Route::get('/Update-users-page/{id?}',[\App\Http\Controllers\UsersController::cl
 
 Route::get('/Update-Map-page/{id?}',[\App\Http\Controllers\CampController::class,'UpdateCamp'])->middleware(['auth', 'verified','admin'])->name('UpdateCamp');
 
+Route::get('/Map-detail/{id?}',[\App\Http\Controllers\CampController::class,'DetailCamp'])->middleware(['auth', 'verified','admin'])->name('DetailCamp');
+
 //POST METHODE
 Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormAddUsers'])->middleware(['auth', 'verified','admin'])->name('FormAddUsers');
 

@@ -13,18 +13,19 @@ create table sol(
 
 -- liste des cultures pouvant etre planter dans un sol donnees
 -- create sequence seqculture increment by 1;
--- create table culture(
---     id varchar(255) primary key,
---     nom varchar(50),
---     prixunitaire numeric(10,2),
---     sol int references sol(id)
--- );
-
 create table culture(
     id varchar(255) primary key,
     nom varchar(50),
-    prix numeric(10,2),
+    prixunitaire numeric(10,2),
+    sol int references sol(id)
 );
+
+-- create table culture(
+--     id varchar(255) primary key,
+--     nom varchar(50),
+--     prix numeric(10,2),
+--     sol int references sol(id)
+-- );
 
 alter table culture add column supeficie decimal;
 --les provinces de madagascar
@@ -79,7 +80,8 @@ create table stockculture(
 create table campculture(
     id serial,
     camp varchar(255) references camp(id),
-    culture varchar(50) references culture(id)
+    culture varchar(50) references culture(id),
+    superficie decimal
 );
 
 --=========================== INSERTION==============================
@@ -99,6 +101,31 @@ INSERT INTO sol (nom) VALUES
 ('Tourbeux'),
 ('Alluviaux'),
 ('Argilo-sableux');
+
+INSERT INTO culture (id, nom, prixunitaire, sol) VALUES
+('1', 'Riz', 700000, 6),
+('2', 'Maïs', 650000, 3),
+('3', 'Manioc', 600000, 7),
+('4', 'Patate douce', 550000, 3),
+('5', 'Haricot', 750000, 2),
+('6', 'Tomate', 1200000, 2),
+('7', 'Pomme de terre', 900000, 2),
+('8', 'Carotte', 800000, 1),
+('9', 'Oignon', 700000, 1),
+('10', 'Aubergine', 850000, 2),
+('11', 'Chou', 950000, 1),
+('12', 'Laitue', 1000000, 2),
+('13', 'Courgette', 800000, 2),
+('14', 'Épinard', 700000, 5),
+('15', 'Piment', 1500000, 4),
+('16', 'Gingembre', 2000000, 5),
+('17', 'Ail', 2500000, 2),
+('18', 'Ananas', 3000000, 4),
+('19', 'Banane', 2000000, 4),
+('20', 'Papaye', 2500000, 4);
+
+
+
 --============================== View et fonction ===============================
 create or replace View v_user as 
 select 

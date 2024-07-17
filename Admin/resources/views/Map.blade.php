@@ -41,6 +41,8 @@
                                             <td>
                                                 <a href="{{ route('UpdateCamp',['id' => $camp->id]) }}"><button class="btn btn-warning"><i class="fas fa-pencil-square-o"></i> </button></a>
                                                 <a href="{{ route('DeleteCamp',['id' => $camp->id]) }}"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>
+                                                <a href="{{ route('DetailCamp',['id' => $camp->id]) }}"><button class="btn btn-primary" ><i class="fas fa-eye"></i></button></a>
+                                                <a href=""><button class="btn btn-success" ><i class="fas fa-plus-circle"></i></button></a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -77,7 +79,7 @@
         }).addTo(map);
 
         @foreach($camps as $camp)
-            L.marker([{{ $camp->lat }}, {{ $camp->lng }}]).addTo(map).bindPopup("<b>{{ $camp->nom }}</b><br>{{ $camp->superficie }} ha<br>{{ $camp->sol }}");
+            L.marker([{{ $camp->lat }}, {{ $camp->lng }}]).addTo(map).bindPopup("<b>{{ $camp->nom }}</b><br><a href=\"{{ route('DetailCamp', ['id' => $camp->id]) }}\">Details</a>");
         @endforeach
 
     </script>

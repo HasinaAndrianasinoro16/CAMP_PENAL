@@ -91,4 +91,16 @@ class CampController extends Controller
             throw new \Exception($exception->getMessage());
         }
     }
+
+    //controller pour afficher les details du camp
+    public function DetailCamp($id)
+    {
+        try {
+            $camp = Camp::getCampById($id);
+            $culture = DB::table('campculture')->where('camp','=',$id)->get();
+            return view('MapDetails')->with('camps',$camp)->with('cultures',$culture);
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
 }
