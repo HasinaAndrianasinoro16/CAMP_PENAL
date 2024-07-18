@@ -78,16 +78,14 @@
                     <div class="card-title h3">Liste des cultures</div>
                     <table class="table table-borderless tab">
                         <thead>
-                        <th>#</th>
                         <th>Culutre</th>
                         <th>Supperficie</th>
                         </thead>
                         <tbody>
                         @foreach($cultures as $culture)
                             <tr>
-                                <td>{{ $culture->id }}</td>
                                 <td>{{ $culture->culture }}</td>
-                                <td>{{ $culture->superficie }}</td>
+                                <td>{{ $culture->superficie }} ha</td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -57,7 +57,7 @@ create sequence seqcamp increment by 1;
 create table camp(
     id varchar(255) primary key,
     nom varchar(50),
-    supeficie numeric(10,2),
+    -- supeficie numeric(10,2),
     province int references province(id),
     lattitude decimal,
     longitude decimal
@@ -150,13 +150,37 @@ create or replace view v_camp as
 select 
     c.id,
     c.nom,
-    c.supeficie as superficie,
     c.province as id_province,
     p.nom as province,
     s.nom as sol,
     s.id as id_sol,
     c.lattitude as lat,
-    c.longitude as lng
+    c.longitude as lng,
+    coalesce((select SUM(cc.superficie) 
+     from campculture cc 
+     where cc.camp = c.id),0) as superficie
 from camp c
 join sol s on s.id = c.sol
 join province p on p.id = c.province;
+
+
+create or replace view v_campculture as
+select
+    cc.id as is_campculture,
+    cc.camp as id_camp,
+    c.nom as camp,
+    cc.culture as id_culture,
+    cu.nom as culture,
+    cc.superficie
+from campculture cc
+join camp c on c.id = cc.camp
+join culture cu on cu.id = cc.culture;
+
+create or replace view v_culture as
+select
+    cl.id as id_culture,
+    cl.nom as culture,
+    cl.sol as id_sol,
+    s.nom as sol
+from culture cl
+join sol s on s.id = cl.sol;

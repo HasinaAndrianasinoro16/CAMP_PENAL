@@ -36,13 +36,12 @@ class CampController extends Controller
         try {
             $request->validate([
                 'nom' => 'required|max:255',
-                'superficie' => 'required',
                 'province' => 'required',
                 'lat' => 'required',
                 'lng' => 'required',
                 'sol' => 'required',
             ]);
-            Camp::SaveCamp(\request('nom'),request('superficie'),request('province'),request('lat'),request('lng'),\request('sol'));
+            Camp::SaveCamp(\request('nom'),request('province'),request('lat'),request('lng'),\request('sol'));
             return redirect()->route('Carte');
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
@@ -78,14 +77,13 @@ class CampController extends Controller
         try {
             $request->validate([
                 'nom' => 'required|max:255',
-                'superficie' => 'required',
                 'province' => 'required',
                 'lat' => 'required',
                 'lng' => 'required',
                 'sol' => 'required',
                 'id' => 'required',
             ]);
-            Camp::UpdateCamp(\request('id'),\request('nom'),\request('superficie'),\request('province'),\request('lat'),\request('lng'),\request('sol'));
+            Camp::UpdateCamp(\request('id'),\request('nom'),\request('province'),\request('lat'),\request('lng'),\request('sol'));
             return redirect()->route('Carte');
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
@@ -97,7 +95,7 @@ class CampController extends Controller
     {
         try {
             $camp = Camp::getCampById($id);
-            $culture = DB::table('campculture')->where('camp','=',$id)->get();
+            $culture = DB::table('v_campculture')->where('id_camp','=',$id)->get();
             return view('MapDetails')->with('camps',$camp)->with('cultures',$culture);
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
@@ -105,12 +103,34 @@ class CampController extends Controller
     }
 
     //controller pour afficher la page AddCulture
-    public function AddCulture()
+    public function AddCulture($id)
     {
         try {
-            return view('AddCulture');
+            $culture = DB::table('culture')->get();
+            $campculture = DB::table('v_campculture')->where('id_camp','=',$id)->get();
+            $sol = Camp::getCampById($id);
+            $sol_id = $sol->id_sol;
+            $suggest = DB::table('v_culture')->where('id_sol','=',$sol_id)->get();
+            return view('AddCulture')->with('cultures',$culture)->with('campcultures', $campculture)->with('sugs',$suggest)->with('sol',$sol);
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }
     }
+
+    //controller pour le formulaire d'insertion d'une culture pour un camp
+    public function FormAddCulture(Request $request)
+    {
+        try {
+            $request->validate([
+                'camp' => 'required',
+                'culture' => 'required',
+                'superficie' => 'required',
+            ]);
+            Camp::SaveCampCulture(\request('camp'),\request('culture'),\request('superficie'));
+            return redirect()->back();
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
 }

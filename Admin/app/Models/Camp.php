@@ -12,7 +12,7 @@ class Camp extends Model
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $timestamps = false;
-    protected $fillable = ['id','nom','supeficie','province','lattitude','longtitude','sol'];
+    protected $fillable = ['id','nom','province','lattitude','longtitude','sol'];
 
     //fonction pour la creation d'un identifiant
     public static function getId()
@@ -32,13 +32,12 @@ class Camp extends Model
     }
 
     //fonction pour creer un nouveau camp
-    public static function SaveCamp($nom,$superficie,$province,$lattitude,$longtitude,$sol)
+    public static function SaveCamp($nom,$province,$lattitude,$longtitude,$sol)
     {
         try {
             $camp = new Camp();
             $camp->id = self::getId();
             $camp->nom = $nom;
-            $camp->supeficie = $superficie;
             $camp->province = $province;
             $camp->lattitude = $lattitude;
             $camp->longitude = $longtitude;
@@ -52,13 +51,12 @@ class Camp extends Model
     }
 
     //fonction pour l'update
-    public static function UpdateCamp($id,$nom,$superficie,$province,$lattitude,$longtitude,$sol)
+    public static function UpdateCamp($id,$nom,$province,$lattitude,$longtitude,$sol)
     {
         try {
             $update = DB::table('camp')->where('id', $id)
                 ->update([
                     'nom' => $nom,
-                    'supeficie' => $superficie,
                     'province' => $province,
                     'lattitude' => $lattitude,
                     'longitude' => $longtitude,
@@ -80,5 +78,22 @@ class Camp extends Model
             throw new \Exception($exception->getMessage());
         }
     }
+
+    //fonction pour inserer une nouvelle culture dans un camp
+    public static function SaveCampCulture($camp, $culture, $superficie)
+    {
+        try {
+            $save = DB::table('campculture')
+                ->insert([
+                    'camp' => $camp,
+                    'culture' => $culture,
+                    'superficie' => $superficie,
+                ]);
+            return $save;
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
     use HasFactory;
 }
