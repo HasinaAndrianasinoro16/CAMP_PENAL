@@ -59,7 +59,7 @@
                                 <div class="col-9">
                                     <label for="Position" class="form-control-label">Position</label>
                                     <select id="Position" name="position" class="form-control">
-                                        <option value="1">D.I.R.A.P</option>
+                                        <option value="1">D.R.A.P</option>
                                         <option value="2">Agent du Ministere</option>
                                     </select>
                                 </div>

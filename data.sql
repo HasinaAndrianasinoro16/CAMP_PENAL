@@ -136,7 +136,7 @@ select
     u.usertype,
     case
         when usertype < 1 then 'Administrateur'
-        when usertype = 1 then 'D.I.R.A.P'
+        when usertype = 1 then 'D.R.A.P'
         when usertype > 1 then 'Agent du ministere'
         else null
     end as position,
