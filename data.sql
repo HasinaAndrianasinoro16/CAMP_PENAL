@@ -37,6 +37,18 @@ create table province(
 ALTER TABLE users ADD COLUMN province INT;
 ALTER TABLE users ADD CONSTRAINT fk_province FOREIGN KEY (province) REFERENCES province(id);
 
+create table collaborateur(
+    id serial primary key,
+    nom varchar(50)
+);
+
+create table materiel(
+    id serial primary key,
+    nom varchar(255),
+    durer int 
+);
+
+
 --les poste possible
 -- create table position(
 --     id serial primary key,
@@ -57,13 +69,31 @@ create sequence seqcamp increment by 1;
 create table camp(
     id varchar(255) primary key,
     nom varchar(50),
-    -- supeficie numeric(10,2),
     province int references province(id),
     lattitude decimal,
     longitude decimal
 );
 ALTER TABLE camp ADD COLUMN sol INT;
 ALTER TABLE camp ADD CONSTRAINT fk_sol FOREIGN KEY (sol) REFERENCES sol(id);
+
+
+create table don (
+    id serial,
+    collaborateur int references collaborateur(id),
+    camp varchar(255) references camp(id),
+    type int, -- 1 pour argent --2 pour materiel
+    materiel int references materiel(id) , -- si nul ou autre c'est que le don est un don d'argent 
+    montant numeric(10,2),
+    datedon date
+);
+
+
+create table CampCollab (
+    id serial,
+    camp varchar(255) references camp(id),
+    collaborateur int references collaborateur(id),
+    details varchar(255)
+);
 
 -- liste des cultures stocke en general
 create table stockculture(

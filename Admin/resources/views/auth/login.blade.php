@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Ministere de la Jusitce</title>
+    <title>Ministere de la Jusitce - Admin</title>
 
     <link href="{{ asset('assets/images/icon/minjus.jpg') }}" rel="icon" media="all">
 
