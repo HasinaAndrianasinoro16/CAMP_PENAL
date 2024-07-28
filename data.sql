@@ -81,9 +81,8 @@ create table don (
     id serial,
     collaborateur int references collaborateur(id),
     camp varchar(255) references camp(id),
-    type int, -- 1 pour argent --2 pour materiel
-    materiel int references materiel(id) , -- si nul ou autre c'est que le don est un don d'argent 
-    montant numeric(10,2),
+    materiel int references materiel(id) , --argent,tracteur,brouette,...
+    quantite numeric(10,2),
     datedon date
 );
 
@@ -92,7 +91,9 @@ create table CampCollab (
     id serial,
     camp varchar(255) references camp(id),
     collaborateur int references collaborateur(id),
-    details varchar(255)
+    details varchar(255),
+    debut date,
+    fin date
 );
 
 -- liste des cultures stocke en general
@@ -214,3 +215,43 @@ select
     s.nom as sol
 from culture cl
 join sol s on s.id = cl.sol;
+
+CREATE OR REPLACE VIEW v_materiel AS
+SELECT DISTINCT
+    d.materiel AS id_materiel,
+    m.nom AS materiel,
+    (SELECT COUNT(*) FROM don WHERE materiel = d.materiel) AS nombre,
+    (SELECT durer FROM materiel WHERE id = d.materiel) AS durer
+FROM don d
+JOIN materiel m ON m.id = d.materiel;
+;
+
+create or replace view v_don as
+select 
+    d.materiel as id_materiel,
+    m.nom as materiel,
+    d.collaborateur as id_colab,
+    c.nom as colab,
+    d.camp as id_camp,
+    cm.nom as camp,
+    d.quantite,
+    d.datedon
+from don d
+join materiel m on m.id = d.materiel
+join collaborateur c on c.id = d.collaborateur
+join camp cm on cm.id = d.camp;
+
+create or replace view v_campcollab as
+select 
+    cc.camp as id_camp,
+    cm.nom as camp,
+    cc.collaborateur as id_colab,
+    cl.nom as colab,
+    cc.details,
+    cc.debut,
+    cc.fin
+from campcollab cc
+join collaborateur cl on cl.id = cc.collaborateur
+join camp cm on cm.id = cc.camp;
+
+    
