@@ -40,12 +40,6 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-9">
-                                    <label for="matricule" class="form-control-label">Numeros matricule </label>
-                                    <input type="text" id="matricule" name="matricule" placeholder="MAT00XXX" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-9">
                                     <label for="province" class="form-control-label">Province</label>
                                     <select id="province" name="province" class="form-control">
                                         @foreach($provinces as $province)

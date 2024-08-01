@@ -217,14 +217,18 @@ from culture cl
 join sol s on s.id = cl.sol;
 
 CREATE OR REPLACE VIEW v_materiel AS
-SELECT DISTINCT
+SELECT 
     d.materiel AS id_materiel,
     m.nom AS materiel,
-    (SELECT COUNT(*) FROM don WHERE materiel = d.materiel) AS nombre,
-    (SELECT durer FROM materiel WHERE id = d.materiel) AS durer
+    d.camp,
+    (select province from camp where id = d.camp),
+    COUNT(d.materiel) AS nombre,
+    m.durer AS durer
 FROM don d
-JOIN materiel m ON m.id = d.materiel;
-;
+JOIN materiel m ON m.id = d.materiel
+GROUP BY d.materiel, m.nom, d.camp, m.durer;
+
+
 
 create or replace view v_don as
 select 
@@ -234,6 +238,7 @@ select
     c.nom as colab,
     d.camp as id_camp,
     cm.nom as camp,
+    (select province from camp where id = d.camp),
     d.quantite,
     d.datedon
 from don d
@@ -254,4 +259,30 @@ from campcollab cc
 join collaborateur cl on cl.id = cc.collaborateur
 join camp cm on cm.id = cc.camp;
 
-    
+create or replace view Etatstock as
+select
+    sc.id as id_stock,
+    sc.camp as id_camp,
+    cm.nom as camp,
+    cm.province,
+    sc.culture as id_culture,
+    c.nom as culture,
+    sc.quantite,
+    sc.datestock,
+    sc.etat
+from stockculture sc
+join camp cm on cm.id = sc.camp
+join culture c on c.id = sc.culture;
+
+
+CREATE or replace VIEW moyenne_stocks AS
+SELECT
+    id_camp,
+    camp,
+    culture,
+    AVG(quantite) AS moyenne_quantite
+FROM
+    etatstock
+where etat = 0
+GROUP BY
+    camp, culture, id_camp;

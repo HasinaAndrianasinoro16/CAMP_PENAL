@@ -42,7 +42,7 @@
                                                 <a href="{{ route('UpdateCamp',['id' => $camp->id]) }}"><button class="btn btn-warning"><i class="fas fa-pencil-square-o"></i> </button></a>
                                                 <a href="{{ route('DeleteCamp',['id' => $camp->id]) }}"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>
                                                 <a href="{{ route('DetailCamp',['id' => $camp->id]) }}"><button class="btn btn-primary" ><i class="fas fa-eye"></i></button></a>
-                                                <a href="{{ route('AddCulture',['id' => $camp->id]) }}"><button class="btn btn-success" ><i class="fas fa-plus-circle"></i></button></a>
+{{--                                                <a href="{{ route('AddCulture',['id' => $camp->id]) }}"><button class="btn btn-success" ><i class="fas fa-plus-circle"></i></button></a>--}}
                                             </td>
                                         </tr>
                                     @endforeach
