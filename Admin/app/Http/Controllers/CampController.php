@@ -133,4 +133,14 @@ class CampController extends Controller
         }
     }
 
+    //controller pour afficher la page d'ajout d'information
+    public function AddInfo()
+    {
+        try {
+            return view('Addinfo');
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
 }

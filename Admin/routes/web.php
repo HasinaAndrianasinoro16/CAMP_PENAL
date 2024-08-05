@@ -41,6 +41,8 @@ Route::get('/Map-detail/{id?}',[\App\Http\Controllers\CampController::class,'Det
 
 Route::get('/Ajout-culture-page/{id?}',[\App\Http\Controllers\CampController::class,'AddCulture'])->middleware(['auth', 'verified','admin'])->name('AddCulture');
 
+Route::get('/Ajout-info-camp-supplementaire/{id?}',[\App\Http\Controllers\CampController::class,'AddInfo'])->middleware(['auth', 'verified','admin'])->name('AddInfo');
+
 //POST METHODE
 Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormAddUsers'])->middleware(['auth', 'verified','admin'])->name('FormAddUsers');
 

@@ -63,7 +63,11 @@ create table materiel(
 --     users int references users(id),
 --     province int references province(id)
 -- );
-
+--liste des situations juridique
+create table situation(
+    id serial primary key,
+    nom varchar(255)
+);
 --liste des camp penal
 create sequence seqcamp increment by 1; 
 create table camp(
@@ -73,9 +77,23 @@ create table camp(
     lattitude decimal,
     longitude decimal
 );
+-- alter table camp add column cultivable decimal;
+-- alter table camp add column ncultivable decimal;
 ALTER TABLE camp ADD COLUMN sol INT;
 ALTER TABLE camp ADD CONSTRAINT fk_sol FOREIGN KEY (sol) REFERENCES sol(id);
+-- alter table camp add column situation int;
+-- alter table camp add constraint fk_situation FOREIGN key (situation) references situation(id);
 
+--detail en plus de chaque camp
+create table more(
+    id serial,
+    camp varchar(255) references camp(id),
+    situation int references situation(id),
+    distance varchar(255),
+    cultivable decimal,
+    ncultivable decimal,
+    litige decimal
+);
 
 create table don (
     id serial,
