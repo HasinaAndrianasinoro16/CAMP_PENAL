@@ -43,6 +43,8 @@ Route::get('/Ajout-culture-page/{id?}',[\App\Http\Controllers\CampController::cl
 
 Route::get('/Ajout-info-camp-supplementaire/{id?}',[\App\Http\Controllers\CampController::class,'AddInfo'])->middleware(['auth', 'verified','admin'])->name('AddInfo');
 
+Route::get('/Formulaire-Ajout-SituationJudiciaire',[\App\Http\Controllers\CampController::class,'Situation'])->middleware(['auth', 'verified','admin'])->name('Situation');
+
 //POST METHODE
 Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormAddUsers'])->middleware(['auth', 'verified','admin'])->name('FormAddUsers');
 
@@ -53,6 +55,8 @@ Route::post('/Modifier-Utilisateur-form',[\App\Http\Controllers\UsersController:
 Route::post('/Modifier-Camp-form',[\App\Http\Controllers\CampController::class,'FormUpdateCamp'])->middleware(['auth', 'verified','admin'])->name('ModifierCamp');
 
 Route::post('/Ajout-culture-form',[\App\Http\Controllers\CampController::class,'FormAddCulture'])->middleware(['auth', 'verified','admin'])->name('Ajout-culture');
+
+Route::post('/Ajout-situation',[\App\Http\Controllers\CampController::class,'SaveSituation'])->middleware(['auth', 'verified','admin'])->name('AjoutSituation');
 //AUTRE
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

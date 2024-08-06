@@ -34,6 +34,11 @@ create table province(
     nom varchar(50)
 );
 
+create table region(
+    id serial primary key,
+    nom varchar(255)
+);
+
 ALTER TABLE users ADD COLUMN province INT;
 ALTER TABLE users ADD CONSTRAINT fk_province FOREIGN KEY (province) REFERENCES province(id);
 
@@ -94,6 +99,8 @@ create table more(
     ncultivable decimal,
     litige decimal
 );
+ALTER TABLE more ADD COLUMN region INT;
+ALTER TABLE more ADD CONSTRAINT fk_region FOREIGN KEY (region) REFERENCES region(id);
 
 create table don (
     id serial,
@@ -173,6 +180,27 @@ INSERT INTO culture (id, nom, prixunitaire, sol) VALUES
 ('19', 'Banane', 2000000, 4),
 ('20', 'Papaye', 2500000, 4);
 
+INSERT INTO region (nom) VALUES ('Analamanga');
+INSERT INTO region (nom) VALUES ('Vakinankaratra');
+INSERT INTO region (nom) VALUES ('Itasy');
+INSERT INTO region (nom) VALUES ('Bongolava');
+INSERT INTO region (nom) VALUES ('Haute Matsiatra');
+INSERT INTO region (nom) VALUES ('Amoron''i Mania');
+INSERT INTO region (nom) VALUES ('Vatovavy Fitovinany');
+INSERT INTO region (nom) VALUES ('Atsimo-Atsinanana');
+INSERT INTO region (nom) VALUES ('Ihorombe');
+INSERT INTO region (nom) VALUES ('Menabe');
+INSERT INTO region (nom) VALUES ('Atsimo-Andrefana');
+INSERT INTO region (nom) VALUES ('Androy');
+INSERT INTO region (nom) VALUES ('Anosy');
+INSERT INTO region (nom) VALUES ('Alaotra-Mangoro');
+INSERT INTO region (nom) VALUES ('Betsiboka');
+INSERT INTO region (nom) VALUES ('Boeny');
+INSERT INTO region (nom) VALUES ('Sofia');
+INSERT INTO region (nom) VALUES ('Diana');
+INSERT INTO region (nom) VALUES ('Sava');
+INSERT INTO region (nom) VALUES ('Analanjirofo');
+INSERT INTO region (nom) VALUES ('Atsinanana');
 
 
 --============================== View et fonction ===============================

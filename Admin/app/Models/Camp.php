@@ -95,5 +95,37 @@ class Camp extends Model
         }
     }
 
+    //fonction pour enregistrer les info suplementaire
+    public static function SaveMore($camp, $situation, $distance, $cultivable, $ncultivable, $litige)
+    {
+        try {
+            $insert = DB::table('more')
+                ->insert([
+                   'camp' => $camp,
+                   'situation' => $situation,
+                   'distance' => $distance,
+                   'cultivable' => $cultivable,
+                   'ncultivable' => $ncultivable,
+                   'litige' => $litige,
+                ]);
+            return $insert;
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    public static function SaveSituation($situation)
+    {
+        try {
+            $insert = DB::table('situation')
+                ->insert([
+                    'nom' => $situation,
+                ]);
+            return $insert;
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
     use HasFactory;
 }

@@ -137,10 +137,71 @@ class CampController extends Controller
     public function AddInfo()
     {
         try {
-            return view('Addinfo');
+            $region = DB::table('region')->get();
+            return view('Addinfo')->with('regions',$region);
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }
     }
 
+    //controller pour afficher le formulaire d'ajout de Situation juridique
+    public function Situation()
+    {
+        try {
+            return view('Situation');
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+        }
+    }
+
+    //form action des situations judiciaire
+    public function SaveSituation(Request $request)
+    {
+        try {
+            $request->validate([
+                'situation' => 'required|string',
+            ],[
+                'situation.required' => 'Situation obligatoire',
+                'situation.string' => 'le champ Situation judiciaire doit etre une chaine de caractere',
+            ]);
+            Camp::SaveSituation($request->situation);
+            return redirect()->back()->with('success2','Situation judiciaire enregistrer avec succes');
+        }catch (\Exception $exception){
+            return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite : ' . $exception->getMessage()]);
+        }
+    }
+//    public function Dons(Request $request)
+//    {
+//        try {
+//            // Validation des données avec messages d'erreur personnalisés
+//            $request->validate([
+//                'id' => 'required|string',
+//                'materiel' => 'required|string',
+//                'colab' => 'required|string',
+//                'qte' => 'required|numeric',
+//                'date' => 'required|date',
+//            ], [
+//                'id.required' => 'Le champ ID est obligatoire.',
+//                'id.integer' => 'L\'ID doit être une chaine de carctere.',
+//                'materiel.required' => 'Le champ Matériel est obligatoire.',
+//                'materiel.string' => 'Le champ Matériel doit être une chaîne de caractères.',
+//                'colab.required' => 'Le champ Collaborateur est obligatoire.',
+//                'colab.string' => 'Le champ Collaborateur doit être une chaîne de caractères.',
+//                'qte.required' => 'Le champ Quantité est obligatoire.',
+//                'qte.numeric' => 'Le champ Quantité doit être un nombre.',
+//                'date.required' => 'Le champ Date est obligatoire.',
+//                'date.date' => 'Le champ Date doit être une date valide.',
+//            ]);
+//
+//            // Appel à la méthode Dons
+//            Camp::Dons($request->input('id'), $request->input('materiel'), $request->input('colab'), $request->input('qte'), $request->input('date'));
+//
+//            // Redirection avec un message de succès
+//            return redirect()->back()->with('success2', 'Don enregistré avec succès');
+//
+//        } catch (\Exception $exception) {
+//            // Gestion des erreurs avec un message utilisateur
+//            return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite : ' . $exception->getMessage()]);
+//        }
+//    }
 }
