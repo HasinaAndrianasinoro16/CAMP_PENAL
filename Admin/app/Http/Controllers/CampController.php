@@ -206,6 +206,20 @@ class CampController extends Controller
         }
     }
 
+    //la page d'exportation en pdf
+//    public function Recensement($id)
+//    {
+//        try {
+////            $camp = Camp::getCampById($id);
+////            $culture = DB::table('v_campculture')->where('id_camp','=',$id)->get();
+//            $abouts = DB::table('about_camp')->where('id_camp','=',$id)->get();
+//            return view('Recensement')->with('abouts',$abouts);
+////            return view('Recensement')->with('camps',$camp)->with('cultures',$culture)->with('abouts',$abouts);
+//        }catch (\Exception $exception){
+//            throw new \Exception($exception->getMessage());
+//        }
+//    }
+
 
 //    public function Dons(Request $request)
 //    {

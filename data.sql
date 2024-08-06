@@ -337,6 +337,7 @@ CREATE OR REPLACE VIEW About_camp AS
 SELECT
     more.camp AS id_camp,
     camp.nom AS camp,
+    camp.province,
     more.region AS id_region,
     region.nom AS localite,
     more.distance,
@@ -344,7 +345,7 @@ SELECT
     more.cultivable,
     more.ncultivable,
     more.situation AS id_situation,
-    situation.nom,
+    situation.nom as situation,
     COALESCE(
         (SELECT 'oui(' || SUM(superficie) || 'ha)' FROM campculture WHERE campculture.camp = more.camp),
         'non'

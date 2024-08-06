@@ -86,6 +86,7 @@
                         <th>Situation</th>
                         <th>Exploite/fonctionnel</th>
                         <th>litige</th>
+{{--                        <th> -- </th>--}}
                         </thead>
                         <tbody>
                         @foreach( $abouts as $about)
@@ -95,9 +96,13 @@
                                 <td>{{ $about->total }}</td>
                                 <td>{{ $about->cultivable }}</td>
                                 <td>{{ $about->ncultivable }}</td>
-                                <td>{{ $about->nom }}</td>
+                                <td>{{ $about->situation }}</td>
                                 <td>{{ $about->exploite_fonctionnel }}</td>
                                 <td>{{ $about->litige }}</td>
+{{--                                <td>--}}
+{{--                                    <a href="{{ route('Recensement', ['id' => $about->id_camp]) }}">Voir Recensement</a>--}}
+{{--                                    <a href="{{ route('Recensement',['id' => $about->id_camp]) }}"><button class="btn btn-primary"><i class="fas fa-print"></i> </button></a>--}}
+{{--                                </td>--}}
                             </tr>
                         @endforeach
                         </tbody>
