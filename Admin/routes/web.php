@@ -45,7 +45,7 @@ Route::get('/Ajout-info-camp-supplementaire/{id?}',[\App\Http\Controllers\CampCo
 
 Route::get('/Formulaire-Ajout-SituationJudiciaire',[\App\Http\Controllers\CampController::class,'Situation'])->middleware(['auth', 'verified','admin'])->name('Situation');
 
-//Route::get('/Recensement/{id?}',[\App\Http\Controllers\CampController::class,'Recensement'])->middleware(['auth', 'verified','admin'])->name('Recensement');
+Route::get('/Recensement/{id?}',[\App\Http\Controllers\CampController::class,'Recensement'])->middleware(['auth', 'verified','admin'])->name('Recensement');
 
 //POST METHODE
 Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormAddUsers'])->middleware(['auth', 'verified','admin'])->name('FormAddUsers');

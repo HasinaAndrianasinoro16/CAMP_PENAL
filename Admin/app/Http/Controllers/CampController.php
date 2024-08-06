@@ -206,7 +206,7 @@ class CampController extends Controller
         }
     }
 
-    //la page d'exportation en pdf
+////    la page d'exportation en pdf
 //    public function Recensement($id)
 //    {
 //        try {
