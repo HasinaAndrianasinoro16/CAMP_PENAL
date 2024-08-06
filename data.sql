@@ -332,3 +332,34 @@ FROM
 where etat = 0
 GROUP BY
     camp, culture, id_camp;
+
+CREATE OR REPLACE VIEW About_camp AS
+SELECT
+    more.camp AS id_camp,
+    camp.nom AS camp,
+    more.region AS id_region,
+    region.nom AS localite,
+    more.distance,
+    (more.cultivable + more.ncultivable) AS total,
+    more.cultivable,
+    more.ncultivable,
+    more.situation AS id_situation,
+    situation.nom,
+    COALESCE(
+        (SELECT 'oui(' || SUM(superficie) || 'ha)' FROM campculture WHERE campculture.camp = more.camp),
+        'non'
+    ) AS Exploite_fonctionnel,
+    COALESCE(
+        CASE 
+            WHEN more.litige > 0 THEN 'oui(' || more.litige || 'ha)'
+            ELSE 'non'
+        END,
+        'non'
+    ) AS litige
+FROM more
+JOIN region ON region.id = more.region
+JOIN situation ON situation.id = more.situation
+JOIN camp ON camp.id = more.camp;
+
+    -- case 
+    --     when (select SUM(supeficie) from campculture where camp = more.camp) > 0 then  (select SUM(supeficie) from campculture where camp = more.camp)

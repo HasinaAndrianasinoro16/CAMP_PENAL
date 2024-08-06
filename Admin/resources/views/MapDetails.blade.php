@@ -75,6 +75,39 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="card-title h3">Details en plus</div>
+                    <table class="table table-responsive-lg">
+                        <thead>
+                        <th>localite</th>
+                        <th>distance</th>
+                        <th>Surface total</th>
+                        <th>Surface cultivable</th>
+                        <th>Surface non cultivable</th>
+                        <th>Situation</th>
+                        <th>Exploite/fonctionnel</th>
+                        <th>litige</th>
+                        </thead>
+                        <tbody>
+                        @foreach( $abouts as $about)
+                            <tr>
+                                <td>{{ $about->localite }}</td>
+                                <td>{{ $about->distance }}</td>
+                                <td>{{ $about->total }}</td>
+                                <td>{{ $about->cultivable }}</td>
+                                <td>{{ $about->ncultivable }}</td>
+                                <td>{{ $about->nom }}</td>
+                                <td>{{ $about->exploite_fonctionnel }}</td>
+                                <td>{{ $about->litige }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
                     <div class="card-title h3">Liste des cultures</div>
                     <table class="table table-borderless tab">
                         <thead>

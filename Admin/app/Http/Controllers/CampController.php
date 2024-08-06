@@ -96,7 +96,8 @@ class CampController extends Controller
         try {
             $camp = Camp::getCampById($id);
             $culture = DB::table('v_campculture')->where('id_camp','=',$id)->get();
-            return view('MapDetails')->with('camps',$camp)->with('cultures',$culture);
+            $abouts = DB::table('about_camp')->where('id_camp','=',$id)->get();
+            return view('MapDetails')->with('camps',$camp)->with('cultures',$culture)->with('abouts',$abouts);
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }
@@ -138,7 +139,8 @@ class CampController extends Controller
     {
         try {
             $region = DB::table('region')->get();
-            return view('Addinfo')->with('regions',$region);
+            $situation = DB::table('situation')->get();
+            return view('Addinfo')->with('regions',$region)->with('situations',$situation);
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }
@@ -170,6 +172,41 @@ class CampController extends Controller
             return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite : ' . $exception->getMessage()]);
         }
     }
+
+    //controller pour le formualire de sauvegarde des informations supplementaire du camp
+    public function SaveInfo(Request $request)
+    {
+        try {
+            $request->validate([
+                'camp' => 'required',
+                'distance' => 'required|string',
+                'litige' => 'nullable|numeric',
+                'cultivable' => 'required|numeric',
+                'ncultivable' => 'required|numeric',
+                'region' => 'required',
+                'situation' => 'required',
+            ],[
+                'camp.required' => 'Camp obligatoire',
+                'distance.required' => 'Distance obligatoire',
+                'distance.string' => 'Distance doit être une chaîne de caractères',
+                'litige.numeric' => 'Litige doit être un nombre réel ou décimal',
+                'cultivable.required' => 'Surface cultivable obligatoire',
+                'cultivable.numeric' => 'Surface cultivable doit être un nombre réel ou décimal',
+                'ncultivable.required' => 'Surface non cultivable obligatoire',
+                'ncultivable.numeric' => 'Surface non cultivable doit être un nombre réel ou décimal',
+                'region.required' => 'Localité obligatoire',
+                'situation.required' => 'Situation obligatoire',
+            ]);
+
+            Camp::SaveMore($request->camp, $request->situation, $request->distance, $request->cultivable, $request->ncultivable, $request->litige, $request->region);
+
+            return redirect()->back()->with('success', 'Info enregistrée avec succès');
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite : ' . $exception->getMessage()]);
+        }
+    }
+
+
 //    public function Dons(Request $request)
 //    {
 //        try {

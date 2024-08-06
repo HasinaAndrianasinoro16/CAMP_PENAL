@@ -96,7 +96,7 @@ class Camp extends Model
     }
 
     //fonction pour enregistrer les info suplementaire
-    public static function SaveMore($camp, $situation, $distance, $cultivable, $ncultivable, $litige)
+    public static function SaveMore($camp, $situation, $distance, $cultivable, $ncultivable, $litige, $region)
     {
         try {
             $insert = DB::table('more')
@@ -107,6 +107,7 @@ class Camp extends Model
                    'cultivable' => $cultivable,
                    'ncultivable' => $ncultivable,
                    'litige' => $litige,
+                    'region' => $region,
                 ]);
             return $insert;
         }catch (\Exception $exception){
