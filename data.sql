@@ -88,6 +88,7 @@ ALTER TABLE camp ADD COLUMN sol INT;
 ALTER TABLE camp ADD CONSTRAINT fk_sol FOREIGN KEY (sol) REFERENCES sol(id);
 -- alter table camp add column situation int;
 -- alter table camp add constraint fk_situation FOREIGN key (situation) references situation(id);
+-- alter table camp add column etablissement varchar(255)
 
 --detail en plus de chaque camp
 create table more(
@@ -101,6 +102,8 @@ create table more(
 );
 ALTER TABLE more ADD COLUMN region INT;
 ALTER TABLE more ADD CONSTRAINT fk_region FOREIGN KEY (region) REFERENCES region(id);
+
+crea
 
 create table don (
     id serial,
@@ -130,7 +133,7 @@ create table stockculture(
     datestock date,
     etat int -- 0 pour entrer et 1 pour sortie // la quantite sortie represente les cultures donnees pour etre revendue tandis que l'entrer sont les cultures destine a etre consomner par les prisonniers
 );
-
+alter table stockculture add column prisonnier integer;
 
 --liste des culture existant par camp
 create table campculture(
@@ -315,6 +318,7 @@ select
     c.nom as culture,
     sc.quantite,
     sc.datestock,
+    sc.prisonnier,
     sc.etat
 from stockculture sc
 join camp cm on cm.id = sc.camp
@@ -364,3 +368,115 @@ JOIN camp ON camp.id = more.camp;
 
     -- case 
     --     when (select SUM(supeficie) from campculture where camp = more.camp) > 0 then  (select SUM(supeficie) from campculture where camp = more.camp)
+
+create or replace view Estimation as
+SELECT 
+    es.id_camp,
+    es.camp,
+    es.id_culture,
+    c.nom AS culture,
+    SUM(es.quantite * c.prixunitaire) AS estimation_prix
+FROM 
+    etatstock es
+JOIN 
+    culture c 
+ON 
+    es.id_culture = c.id
+GROUP BY 
+    es.id_camp, es.camp, es.id_culture, c.nom
+ORDER BY
+    es.id_camp, es.id_culture;
+
+CREATE OR REPLACE VIEW v_stock AS
+SELECT
+    es.id_camp,
+    es.camp,
+    es.province,
+    es.id_culture,
+    es.culture,
+    SUM(CASE WHEN es.etat = 0 THEN es.quantite ELSE 0 END) AS entre,
+    SUM(CASE WHEN es.etat = 1 THEN es.quantite ELSE 0 END) AS sortie,
+    ABS(
+        SUM(CASE WHEN es.etat = 0 THEN es.quantite ELSE 0 END) -
+        SUM(CASE WHEN es.etat = 1 THEN es.quantite ELSE 0 END)
+    ) AS total
+FROM
+    etatstock es
+GROUP BY
+    es.id_camp,
+    es.camp,
+    es.province,
+    es.id_culture,
+    es.culture;
+
+--rapport mensuel a la gestion de production
+CREATE OR REPLACE VIEW rapport_stock AS
+SELECT 
+    es.id_camp,
+    cm.nom AS camp,
+    es.id_culture,
+    c.nom AS culture,
+    SUM(CASE WHEN es.etat = 0 THEN es.quantite ELSE 0 END) AS entre,
+    SUM(CASE WHEN es.etat = 1 THEN es.quantite ELSE 0 END) AS sortie,
+    ABS(SUM(CASE WHEN es.etat = 0 THEN es.quantite ELSE 0 END) - SUM(CASE WHEN es.etat = 1 THEN es.quantite ELSE 0 END)) AS total_disponible,
+    SUM(CASE WHEN es.etat = 1 AND es.prisonnier = 1 THEN es.quantite ELSE 0 END) AS consommation_locale,
+    SUM(CASE WHEN es.etat = 1 AND es.prisonnier = 0 THEN es.quantite ELSE 0 END) AS semences,
+    SUM(CASE WHEN es.etat = 1 AND es.prisonnier = 2 THEN es.quantite ELSE 0 END) AS etablissements,
+    SUM(CASE WHEN es.etat = 1 AND es.prisonnier = 3 THEN es.quantite ELSE 0 END) AS autres_motifs,
+    (SELECT SUM(sc.quantite) FROM stockculture sc WHERE sc.camp = es.id_camp AND sc.culture = es.id_culture AND sc.etat = 0) AS report_stock
+FROM 
+    etatstock es
+JOIN 
+    camp cm ON cm.id = es.id_camp
+JOIN 
+    culture c ON c.id = es.id_culture
+GROUP BY 
+    es.id_camp, cm.nom, es.id_culture, c.nom
+ORDER BY 
+    es.id_camp, es.id_culture;
+
+    
+
+CREATE OR REPLACE VIEW RapportMensuel AS
+SELECT
+    es.id_camp,
+    c.nom AS camp,
+    cu.nom AS produit,
+    SUM(CASE WHEN es.etat = 0 THEN es.quantite ELSE 0 END) AS quantite_produite,
+    SUM(CASE WHEN es.etat = 1 THEN es.quantite ELSE 0 END) AS quantite_consommation_locale,
+    0 AS semences, -- Placeholder si vous avez des données de semences à inclure
+    0 AS etablissements, -- Placeholder si vous avez des données des établissements à inclure
+    0 AS autres_motifs, -- Placeholder si vous avez d'autres motifs à inclure
+    ABS(SUM(CASE WHEN es.etat = 0 THEN es.quantite ELSE 0 END) - 
+        SUM(CASE WHEN es.etat = 1 THEN es.quantite ELSE 0 END)) AS disponible_magasin,
+    ABS(SUM(CASE WHEN es.etat = 0 THEN es.quantite ELSE 0 END)) AS recolte_du_mois,
+    ABS(SUM(CASE WHEN es.etat = 1 THEN es.quantite ELSE 0 END)) AS report_stock_magasin
+FROM
+    etatstock es
+JOIN
+    camp c ON es.id_camp = c.id
+JOIN
+    culture cu ON es.id_culture = cu.id
+GROUP BY
+    es.id_camp, c.nom, cu.nom
+ORDER BY
+    es.id_camp, cu.nom;
+
+
+--rapport trimestriel materiels
+CREATE OR REPLACE VIEW RapportTrimestrielMateriels AS
+SELECT 
+    cm.nom AS cp,
+    m.nom AS materiel,
+    COUNT(d.materiel) AS nombre,
+    SUM(CASE WHEN d.etat = 'Bon' THEN 1 ELSE 0 END) AS etat_bon,
+    SUM(CASE WHEN d.etat = 'Mauvais' THEN 1 ELSE 0 END) AS etat_mauvais
+FROM 
+    don d
+JOIN 
+    materiel m ON m.id = d.materiel
+JOIN 
+    camp cm ON cm.id = d.camp
+GROUP BY 
+    cm.nom, m.nom;
+
