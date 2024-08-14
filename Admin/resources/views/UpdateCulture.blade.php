@@ -25,7 +25,7 @@
                             {{ session('success') }}
                         </div>
                     @endif
-                    <form action="{{ route('AjoutCulture') }}" method="post">
+                    <form action="{{ route('ModifierCulture') }}" method="post">
                         @csrf
                         <div class="card-body card-block">
                             <div class="form-group">

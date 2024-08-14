@@ -68,6 +68,9 @@ Route::post('/Ajout-situation',[\App\Http\Controllers\CampController::class,'Sav
 Route::post('/Ajout-info-Camp',[\App\Http\Controllers\CampController::class,'SaveInfo'])->middleware(['auth', 'verified','admin'])->name('AjoutInfo');
 
 Route::post('/Ajout-culture',[\App\Http\Controllers\CultureController::class,'AddCulture'])->middleware(['auth', 'verified','admin'])->name('AjoutCulture');
+
+Route::post('/Modifier-culture',[\App\Http\Controllers\CultureController::class,'FormUpdateCulture'])->middleware(['auth', 'verified','admin'])->name('ModifierCulture');
+
 //AUTRE
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -78,7 +78,7 @@ class CultureController extends Controller
                 'sol.required' => 'le champ Sol ne doit pas etre vide',
             ]);
 
-            Culture::saveCulture($request->name, $request->prix, $request->sol);
+            Culture::updateCulture($request->id, $request->name, $request->prix, $request->sol);
             return redirect()->back()->with('success', 'Culture enregistrée avec succès');
         }catch (\Exception $exception){
             return redirect()->back()->withErrors(['error'=> 'Une erreur s\'est produite:' . $exception->getMessage()]);
