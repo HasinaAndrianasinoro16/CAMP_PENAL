@@ -12,11 +12,11 @@ create table sol(
 );
 
 -- liste des cultures pouvant etre planter dans un sol donnees
--- create sequence seqculture increment by 1;
+create sequence seqculture increment by 1;
 create table culture(
     id varchar(255) primary key,
     nom varchar(50),
-    prixunitaire numeric(10,2),
+    prixunitaire decimal,
     sol int references sol(id)
 );
 
@@ -27,7 +27,7 @@ create table culture(
 --     sol int references sol(id)
 -- );
 
-alter table culture add column supeficie decimal;
+-- alter table culture add column supeficie decimal;
 --les provinces de madagascar
 create table province(
     id serial primary key,

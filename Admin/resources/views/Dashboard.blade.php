@@ -49,7 +49,7 @@
         <div class="menu-sidebar2__content js-scrollbar1">
             <div class="account2">
                 <div class="image img-cir img-120">
-                    <img src="{{ asset('assets/images/icon/avatar-01.jpg') }}" alt="John Doe" />
+                    <img src="https://www.stage.itu-labs.com/Assets/img/user2-160x160.jpg" alt="John Doe" />
                 </div>
                 <h4 class="name">{{ Auth::user()->name }}</h4>
                 <form method="POST" action="{{ route('logout') }}">
@@ -85,6 +85,10 @@
                         <a href="{{ route('Situation') }}">
                             <i class="fas fa-list-alt"></i>Situation judiciaire </a>
                     </li>
+                    <li>
+                        <a href="{{ route('Culture') }}">
+                            <i class="fab fa-pagelines"></i>Liste des cultures</a>
+                    </li>
 
                 </ul>
             </nav>
@@ -105,6 +109,9 @@
                             </a>
                         </div>
                         <div class="header-button2">
+                            <div class="header-button-item js-item-menu">
+                                <i class="zmdi zmdi-comment"></i>
+                            </div>
                             <div class="header-button-item mr-0 js-sidebar-btn">
                                 <i class="zmdi zmdi-menu"></i>
                             </div>
@@ -141,7 +148,7 @@
             <div class="menu-sidebar2__content js-scrollbar2">
                 <div class="account2">
                     <div class="image img-cir img-120">
-                        <img src="{{ asset('assets/images/icon/avatar-01.jpg') }}" alt="John Doe" />
+                        <img src="https://www.stage.itu-labs.com/Assets/img/user2-160x160.jpg" alt="John Doe" />
                     </div>
                     <h4 class="name">{{ Auth::user()->name }}</h4>
                     <form method="POST" action="{{ route('logout') }}">
@@ -175,6 +182,10 @@
                         <li>
                             <a href="{{ route('Situation') }}">
                                 <i class="fas fa-list-alt"></i>Situation judiciaire </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('Culture') }}">
+                                <i class="fab fa-pagelines"></i>Liste des cultures</a>
                         </li>
 
                     </ul>
