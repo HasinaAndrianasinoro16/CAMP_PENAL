@@ -10,29 +10,29 @@ use Illuminate\Database\Eloquent\Model;
 class Messages extends Model
 {
     protected $table = 'messages';
-    protected $fillable = ['from_id','to_id','created_at','content'];
+    protected $fillable = ['from_id', 'to_id', 'created_at', 'content'];
     public $timestamps = false;
-
 
     public function from()
     {
         return $this->belongsTo(User::class, 'from_id');
     }
+
     public static function createMessage($fromUserId, $toUserId, $message)
     {
         try {
             return self::create([
                 'from_id' => $fromUserId,
                 'to_id' => $toUserId,
-                'created_at' => Carbon::now(),
                 'content' => $message,
+                'created_at' => Carbon::now(),
             ]);
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
     }
 
-    public static function getMessagefor($fromUserId, $toUserId): Builder
+    public static function getMessageFor($fromUserId, $toUserId): Builder
     {
         try {
             return self::query()
@@ -44,10 +44,12 @@ class Messages extends Model
                     $query->where('from_id', $toUserId)
                         ->where('to_id', $fromUserId);
                 })
-                ->orderBy('created_at', 'desc')->with('from');
+                ->orderBy('created_at', 'desc')
+                ->with('from');
         } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
     }
+
     use HasFactory;
 }

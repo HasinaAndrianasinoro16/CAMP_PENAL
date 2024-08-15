@@ -28,6 +28,8 @@ class MessageController extends Controller
             $id = Auth::id();
             $users = DB::table('v_user')->get()->where('id','<>',$id);
             $messages = Messages::getMessagefor($id, $user->id)->get()->reverse();
+//            dd($messages);
+//            dd($id,$user->id);
             return view('conversation')->with('users',$users)->with('messages',$messages)->with('user',$user);
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
@@ -52,22 +54,6 @@ class MessageController extends Controller
             \Log::error($exception->getMessage());
             return redirect()->back()->withErrors(['error' => 'Une erreur est survenue lors de l\'envoi du message.']);
         }
-    }
-
-    //////////////////////////////////////////////
-    public function index(){
-        $users = DB::table('users')->get()->where('id','<>',Auth::id());
-        return view('conversations.index')->with('users',$users);
-    }
-
-    public function show(User $user)
-    {
-        $id = Auth::id();
-        $users = DB::table('users')->get()->where('id','<>',$id);
-//        $messages = Messages::getMessagefor($id, $user->id)->get()->reverse();
-        $messages = Messages::getMessagefor($id, $user->id)->get()->reverse();
-//        $user = DB::table('users')->where('id','=',$id)->first();
-        return view('conversations.show')->with('users',$users)->with('user',$user)->with('messages',$messages); ;
     }
 
 
