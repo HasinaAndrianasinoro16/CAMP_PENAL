@@ -55,7 +55,7 @@ Route::get('/Update-culture/{id?}',[\App\Http\Controllers\CultureController::cla
 
 Route::get('/Message',[\App\Http\Controllers\MessageController::class,'Message'])->middleware(['auth', 'verified','admin'])->name('message');
 
-Route::get('/conversion/{id?}',[\App\Http\Controllers\MessageController::class,'Conversation'])->middleware(['auth', 'verified','admin'])->name('Conversation');
+Route::get('/conversion/{user?}',[\App\Http\Controllers\MessageController::class,'Conversation'])->middleware(['auth', 'verified','admin'])->name('Conversation');
 
 Route::get('/Erreur',function (){
     return view('Error');
@@ -79,6 +79,8 @@ Route::post('/Ajout-info-Camp',[\App\Http\Controllers\CampController::class,'Sav
 Route::post('/Ajout-culture',[\App\Http\Controllers\CultureController::class,'AddCulture'])->middleware(['auth', 'verified','admin'])->name('AjoutCulture');
 
 Route::post('/Modifier-culture',[\App\Http\Controllers\CultureController::class,'FormUpdateCulture'])->middleware(['auth', 'verified','admin'])->name('ModifierCulture');
+
+Route::post('/send',[\App\Http\Controllers\MessageController::class,'sendMessage'])->middleware(['auth', 'verified','admin'])->name('send');
 
 //AUTRE
 Route::middleware('auth')->group(function () {

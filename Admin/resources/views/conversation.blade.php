@@ -7,9 +7,38 @@
 {{--            </div>--}}
 {{--            <div class="py-3"></div>--}}
 {{--        </div>--}}
-        <div class="col-lg-12">
+        <div class="col-lg-4">
+        <div class="au-card au-card--no-shadow au-card--no-pad m-b-40 au-card--border">
+            <div class="au-card-title" >
+                <div class="bg-overlay bg-success"></div>
+                <h3>
+                    <h3><i class="zmdi zmdi-account-calendar"></i>Contact</h3>
+            </div>
+            <div class="au-task js-list-load au-task--border">
+                <div class="au-task__title">
+                    <p>Message de {{ Auth::user()->name }}</p>
+                </div>
+                <div class="au-task-list js-scrollbar3">
+                    @foreach( $users as $user )
+                        <div class="au-task__item au-task__item--success">
+                            <div class="au-task__item-inner">
+                                <h5 class="task">
+                                    <a href="{{ route('Conversation', ['user' => $user->id]) }}">{{ $user->name }}</a>
+                                </h5>
+                                <span class="time">{{ $user->position }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="au-task__footer">
+                    <button class="au-btn au-btn-load js-load-btn">Afficher plus de contact</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="col-lg-8">
             <div class="au-card au-card--no-shadow au-card--no-pad m-b-40 au-card--border">
-                <div class="au-card-title" style="background-image:url('images/bg-title-02.jpg');">
+                <div class="au-card-title">
                     <div class="bg-overlay bg-success"></div>
                     <h3>
                         <i class="zmdi zmdi-comment-text"></i>Conversation</h3>
@@ -23,35 +52,39 @@
                                         <img src="https://www.stage.itu-labs.com/Assets/img/user2-160x160.jpg" alt="John Smith">
                                     </div>
                                 </div>
-                                <span class="nick"><a href="#">John Smith</a></span>
+                                <span class="nick"><a href="#">{{ $user->name }}</a></span>
                             </div>
                         </div>
                         <div class="au-chat__content au-chat__content2 js-scrollbar5">
-                            <div class="recei-mess-wrap">
-                                <span class="mess-time">12 Min ago</span>
-                                <div class="recei-mess__inner">
-                                    <div class="avatar avatar--tiny">
-                                        <img src="https://www.stage.itu-labs.com/Assets/img/user2-160x160.jpg" alt="John Smith">
-                                    </div>
-                                    <div class="recei-mess-list">
-                                        <div class="recei-mess">Lorem ipsum dolor sit amet elit</div>
-                                        <div class="recei-mess">Donec tempor viverra</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="send-mess-wrap">
-                                <span class="mess-time">30 Sec ago</span>
-                                <div class="send-mess__inner">
-                                    <div class="send-mess-list">
-                                        <div class="send-mess">Lorem ipsum dolor sit amet elit</div>
+{{--                            recevoir un message--}}
+                           @foreach( $messages as $message )
+                                <div class="recei-mess-wrap">
+                                    <span class="mess-time">{{ $message->created_at }}</span>
+                                    <div class="recei-mess__inner">
+                                        <div class="recei-mess-list">
+                                            <div class="recei-mess">
+                                                {{ nl2br(e( $message->content )) }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                           @endforeach
+{{--                            envoyer un message--}}
+{{--                            <div class="send-mess-wrap">--}}
+{{--                                <span class="mess-time">30 Sec ago</span>--}}
+{{--                                <div class="send-mess__inner">--}}
+{{--                                    <div class="send-mess-list">--}}
+{{--                                        <div class="send-mess bg-dark">Lorem ipsum dolor sit amet elit</div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
                         </div>
                         <div class="au-chat-textfield">
-                            <form class="au-form-icon">
-                                <textarea class="au-input au-input--full form-control" rows="2"></textarea>
-                                <button class="au-input-icon">
+                            <form action="{{ route('send') }}" method="post" class="au-form-icon">
+                                @csrf
+                                <textarea  name="contents" placeholder="Ecriver votre message..." class="au-input au-input--full form-control" rows="2"></textarea>
+                                <input type="hidden" value="{{ $user->id }}" name="user">
+                                <button class="au-input-icon" type="submit">
                                     <i class="fas fa-paper-plane"></i>
                                 </button>
                             </form>

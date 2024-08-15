@@ -143,19 +143,12 @@ create table campculture(
     superficie decimal
 );
 
-create table conversations (
+create table messages (
     id serial primary key,
     from_id int references users(id),
     to_id int references users(id),
-    created_at timestamp default current_timestamp
-);
-
-create table messages (
-    id serial primary key,
-    sender_id int references users(id),
-    content varchar(255),
-    conversation_id int references conversations(id),
-    created_at timestamp default current_timestamp
+    created_at timestamp,
+    content varchar(500)
 );
 
 
