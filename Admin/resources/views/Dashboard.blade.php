@@ -109,8 +109,8 @@
                             </a>
                         </div>
                         <div class="header-button2">
-                            <div class="header-button-item js-item-menu">
-                                <i class="zmdi zmdi-comment"></i>
+                            <div class="header-button-item">
+                                <a href="{{ route('message') }}" style="color: #fff;"><i class="zmdi zmdi-comment"></i></a>
                             </div>
                             <div class="header-button-item mr-0 js-sidebar-btn">
                                 <i class="zmdi zmdi-menu"></i>

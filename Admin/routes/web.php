@@ -52,6 +52,15 @@ Route::get('/Culture-liste',[\App\Http\Controllers\CultureController::class,'Cul
 Route::get('/Formluaire-Culture',[\App\Http\Controllers\CultureController::class,'NewCulture'])->middleware(['auth', 'verified','admin'])->name('NewCulture');
 
 Route::get('/Update-culture/{id?}',[\App\Http\Controllers\CultureController::class,'updateCulture'])->middleware(['auth', 'verified','admin'])->name('UpdateCulture');
+
+Route::get('/Message',[\App\Http\Controllers\MessageController::class,'Message'])->middleware(['auth', 'verified','admin'])->name('message');
+
+Route::get('/conversion/{id?}',[\App\Http\Controllers\MessageController::class,'Conversation'])->middleware(['auth', 'verified','admin'])->name('Conversation');
+
+Route::get('/Erreur',function (){
+    return view('Error');
+});
+
 //POST METHODE
 Route::post('/Ajout-utilisateur-form',[\App\Http\Controllers\UsersController::class,'FormAddUsers'])->middleware(['auth', 'verified','admin'])->name('FormAddUsers');
 
