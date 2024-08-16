@@ -32,7 +32,7 @@ class Messages extends Model
         }
     }
 
-    public static function getMessageFor($fromUserId, $toUserId): Builder
+    public static function getMessagefor($fromUserId, $toUserId): Builder
     {
         try {
             return self::query()
