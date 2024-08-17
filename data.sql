@@ -151,6 +151,17 @@ create table messages (
     content varchar(500)
 );
 
+CREATE TABLE stock_estimation (
+    id SERIAL PRIMARY KEY,
+    camp VARCHAR(50) references camp(id) ,
+    culture varchar(50) references culture(id),
+    nom VARCHAR(50) ,
+    quantite NUMERIC(10, 2) ,
+    estimation NUMERIC(20, 4) ,
+    datestock DATE ,
+    etat INT 
+);
+
 
 --=========================== INSERTION==============================
 INSERT INTO province (nom) VALUES
@@ -378,23 +389,23 @@ JOIN camp ON camp.id = more.camp;
     -- case 
     --     when (select SUM(supeficie) from campculture where camp = more.camp) > 0 then  (select SUM(supeficie) from campculture where camp = more.camp)
 
-create or replace view Estimation as
-SELECT 
-    es.id_camp,
-    es.camp,
-    es.id_culture,
-    c.nom AS culture,
-    SUM(es.quantite * c.prixunitaire) AS estimation_prix
-FROM 
-    etatstock es
-JOIN 
-    culture c 
-ON 
-    es.id_culture = c.id
-GROUP BY 
-    es.id_camp, es.camp, es.id_culture, c.nom
-ORDER BY
-    es.id_camp, es.id_culture;
+-- create or replace view Estimation as
+-- SELECT 
+--     es.id_camp,
+--     es.camp,
+--     es.id_culture,
+--     c.nom AS culture,
+--     SUM(es.quantite * c.prixunitaire) where AS estimation_prix
+-- FROM 
+--     etatstock es
+-- JOIN 
+--     culture c 
+-- ON 
+--     es.id_culture = c.id
+-- GROUP BY 
+--     es.id_camp, es.camp, es.id_culture, c.nom
+-- ORDER BY
+--     es.id_camp, es.id_culture;
 
 CREATE OR REPLACE VIEW v_stock AS
 SELECT
@@ -417,6 +428,25 @@ GROUP BY
     es.province,
     es.id_culture,
     es.culture;
+
+create or replace view Estimation as
+select
+    es.id_camp,
+    es.camp,
+    es.id_culture,
+    c.nom AS culture,
+    SUM(es.total * c.prixunitaire) AS estimation_prix
+FROM 
+    v_stock es
+JOIN 
+    culture c 
+ON 
+    es.id_culture = c.id
+GROUP BY 
+    es.id_camp, es.camp, es.id_culture, c.nom
+ORDER BY
+    es.id_camp, es.id_culture;
+
 
 --rapport mensuel a la gestion de production
 CREATE OR REPLACE VIEW rapport_stock AS
