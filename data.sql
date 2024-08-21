@@ -148,7 +148,8 @@ create table messages (
     from_id int references users(id),
     to_id int references users(id),
     created_at timestamp,
-    content varchar(500)
+    content varchar(500),
+    read_at timestamp
 );
 
 CREATE TABLE stock_estimation (

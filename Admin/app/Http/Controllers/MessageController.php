@@ -14,9 +14,13 @@ class MessageController extends Controller
     public function Message()
     {
         try {
-            $users = DB::table('v_user')->get()->where('id','<>',Auth::id());
-            return view('message')->with('users',$users);
-        }catch (\Exception $exception){
+            $users = DB::table('v_user')->where('id', '<>', Auth::id())->get();
+            $unreadMessages = [];
+            foreach ($users as $user) {
+                $unreadMessages[$user->id] = \App\Models\Messages::coutMessageReceive($user->id);
+            }
+            return view('message')->with('users', $users)->with('unreadMessages', $unreadMessages);
+        } catch (\Exception $exception) {
             throw new \Exception($exception->getMessage());
         }
     }
@@ -28,6 +32,7 @@ class MessageController extends Controller
             $id = Auth::id();
             $users = DB::table('v_user')->get()->where('id','<>',$id);
             $messages = Messages::getMessagefor($id, $user->id)->get()->reverse();
+            Messages::Read_at($user->id);
 //            dd($messages);
 //            dd($id,$user->id);
             return view('conversation')->with('users',$users)->with('messages',$messages)->with('user',$user);
