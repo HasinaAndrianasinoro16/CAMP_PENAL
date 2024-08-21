@@ -82,6 +82,8 @@ Route::post('/Modifier-culture',[\App\Http\Controllers\CultureController::class,
 
 Route::post('/send',[\App\Http\Controllers\MessageController::class,'sendMessage'])->middleware(['auth', 'verified','admin'])->name('send');
 
+Route::post('/import-Utilisateur',[\App\Http\Controllers\UsersController::class,'importUsers'])->middleware(['auth', 'verified','admin'])->name('ImportUsers');
+
 //AUTRE
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -25,7 +25,7 @@
                                     <thead>
                                     <tr>
                                         <th>Nom</th>
-                                        <th>Superficie (ha)</th>
+                                        <th>Superficie cultivees (ha)</th>
                                         <th>Province</th>
                                         <th>type de terre</th>
                                         <th> -- </th>

@@ -16,6 +16,11 @@
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <div class="card-title h3">Liste utilisateur</div>
                     <table id="example" class="table table-hover" style="width:100%">
                         <thead>

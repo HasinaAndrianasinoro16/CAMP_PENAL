@@ -11,6 +11,15 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-title h3">Ajouter les nouvealles information de l'Utilisateur</div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form action="{{ route('ModifierUsers') }}" method="post">
                         @csrf
                         <div class="card-body card-block">

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ImportUser;
 use App\Models\Province;
 use App\Models\User;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Excel;
 
 class UsersController extends Controller
 {
@@ -62,12 +64,26 @@ class UsersController extends Controller
                 'password' => 'required|min:6',
                 'province' => 'required',
                 'position' => 'required',
+            ],[
+                'name.required' => "Le nom est obligatoire",
+                'name.max' => 'Le nom ne doit pas dépasser les 255 caractères',
+                'matricule.required' => "Le matricule est obligatoire",
+                'matricule.max' => 'Le matricule ne doit pas dépasser les 255 caractères',
+                'email.required' => "L'email est obligatoire",
+                'email.email' => "L'email doit être une adresse email valide",
+                'email.max' => "L'email ne doit pas dépasser les 255 caractères",
+                'email.unique' => "Cet email est déjà utilisé",
+                'password.required' => "Le mot de passe est obligatoire",
+                'password.min' => "Le mot de passe doit contenir au moins 6 caractères",
+                'province.required' => "La province est obligatoire",
+                'position.required' => "Le poste est obligatoire",
             ]);
+
             Users::SaveUsers(request('name'),\request('matricule'),request('email'),request('password'),request('province'),request('position'));
 //            Users::SaveUsers(request(['name', 'email', 'password', 'province', 'position']));
-            return redirect()->route('Utilisateur');
-        }catch (\Exception $exception){
-            throw new \Exception($exception->getMessage());
+            return redirect()->route('Utilisateur')->with('success', 'Utilisateur ajouté avec succès.');
+        } catch (\Exception $exception) {
+            return redirect()->back()->withErrors(['error' => $exception->getMessage()])->withInput();
         }
     }
     //controller pour afficher la page de modification d'users
@@ -94,11 +110,39 @@ class UsersController extends Controller
                 'password' => 'required|min:6',
                 'province' => 'required',
                 'position' => 'required',
+            ],[
+                'name.required' => "Le nom est obligatoire",
+                'name.max' => 'Le nom ne doit pas dépasser les 255 caractères',
+                'id.required' => "L'identifiant est obligatoire",
+                'matricule.required' => "Le matricule est obligatoire",
+                'matricule.max' => 'Le matricule ne doit pas dépasser les 255 caractères',
+                'email.required' => "L'email est obligatoire",
+                'email.email' => "L'email doit être une adresse email valide",
+                'email.max' => "L'email ne doit pas dépasser les 255 caractères",
+                'password.required' => "Le mot de passe est obligatoire",
+                'password.min' => "Le mot de passe doit contenir au moins 6 caractères",
+                'province.required' => "La province est obligatoire",
+                'position.required' => "Le poste est obligatoire",
             ]);
+
             Users::UpdateUsers(\request('id'),\request('name'),\request('matricule'),\request('email'),\request('password'),request('province'),\request('position'));
-            return redirect()->route('Utilisateur');
+            return redirect()->route('Utilisateur')->with('success','Utilisateur modifier');
         }catch (\Exception $exception){
-            throw new \Exception($exception->getMessage());
+            return redirect()->back()->withErrors(['error' => $exception->getMessage()])->withInput();
+        }
+    }
+
+    //controller pour enregistrer via un fichier csv ou excel
+    public function importUsers(Request $request)
+    {
+        try {
+            $file = $request->file('csv_file');
+            \Maatwebsite\Excel\Facades\Excel::import(new ImportUser(), $file);
+//        Excel::import(new UsersImport, $file);
+            return redirect()->route('Utilisateur')->with('success', 'Les utilisateurs ont bien ete enregistrer.');
+
+        }catch (\Exception $exception){
+            return redirect()->back()->withErrors(['error' => $exception->getMessage()])->withInput();
         }
     }
 
