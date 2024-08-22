@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <div class="col-9">
                                 <label for="Nom" class="form-control-label">Veuiller selectionner le fichier excel/csv</label>
-                                <input type="file" class="form-control" name="csv_file" class="form-control">
+                                <input type="file" class="form-control" name="csv_file" class="form-control" required>
                             </div>
                         </div>
                         <div class="py-2"></div>
