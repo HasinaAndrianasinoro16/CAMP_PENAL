@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UserModel;
 use App\Imports\ImportUser;
 use App\Models\Province;
 use App\Models\User;
@@ -143,6 +144,19 @@ class UsersController extends Controller
 
         }catch (\Exception $exception){
             return redirect()->back()->withErrors(['error' => $exception->getMessage()])->withInput();
+        }
+    }
+
+    //fonction pour telecharger le model Excel pour les Users
+    public function ModelUsers()
+    {
+        try {
+            $data =[
+                ['(ex:Jonh Doe, Analamanga,...','exampleEmail@gmail.com','le mot de passe de l\' utilisateur','(ex: DRAP, D.R.A.P, Agent ministere, minister,...','(ex: Antananarivo, Mahajanga, Fianarantsoa,..','son matricule']
+            ];
+            return \Maatwebsite\Excel\Facades\Excel::download(new UserModel($data), 'Model_utilisateur.xlsx');
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
         }
     }
 

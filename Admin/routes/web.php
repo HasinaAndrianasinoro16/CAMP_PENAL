@@ -57,6 +57,8 @@ Route::get('/Message',[\App\Http\Controllers\MessageController::class,'Message']
 
 Route::get('/conversion/{user?}',[\App\Http\Controllers\MessageController::class,'Conversation'])->middleware(['auth', 'verified','admin'])->name('Conversation');
 
+Route::get('/Model-utilisateur',[\App\Http\Controllers\UsersController::class,'ModelUsers'])->middleware(['auth', 'verified','admin'])->name('modelUsers');
+
 Route::get('/Erreur',function (){
     return view('Error');
 });

@@ -27,7 +27,7 @@ class ImportUser implements ToModel,WithHeadingRow
         $usertype = ($row['poste'] == 'DRAP' || $row['poste'] == 'D.R.A.P') ? 1 : 2;
 
         $province = DB::table('province')
-            ->where('nom', '=', $row['province'])
+            ->where('nom', 'ILIKE', $row['province'].'%')
             ->value('id');
 
         if (!$province) {
