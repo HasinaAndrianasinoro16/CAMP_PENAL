@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+App::setLocale('fr');
 //GET METHODE
 //Route::get('/dashboard', function () {
 //    return view('dashboard');
