@@ -58,7 +58,7 @@
                                      onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                         <i class="zmdi zmdi-power"></i>
-                        {{ __('sign out') }}
+                        {{ __('Se deconnecter') }}
                     </x-dropdown-link>
                 </form>
                 {{--                <a href="#">Sign out</a>--}}
@@ -133,7 +133,7 @@
                                                              onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                                                 <i class="zmdi zmdi-power"></i>
-                                                {{ __('sign out') }}
+                                                {{ __('Se deconnecter') }}
                                             </x-dropdown-link>
                                         </form>
                                     </div>
@@ -162,7 +162,7 @@
                                          onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                             <i class="zmdi zmdi-power"></i>
-                            {{ __('sign out') }}
+                            {{ __('Se deconnecter') }}
                         </x-dropdown-link>
                     </form>
                 </div>
