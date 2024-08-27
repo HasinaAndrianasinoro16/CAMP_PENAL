@@ -21,6 +21,6 @@ class UserModel implements FromCollection,WithHeadings
     }
 
     public function headings(): array{
-        return ['nom','email','password','poste','province','imatricule'];
+        return ['nom','email','password','poste','province','region','imatricule'];
     }
 }

@@ -83,6 +83,16 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="col-9">
+                                    <label for="region" class="form-control-label">Region</label>
+                                    <select id="region" name="region" class="form-control">
+                                        @foreach($regions as $region)
+                                            <option value="{{ $region->id }}">{{ $region->nom }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="form-group">
                                 <div class="col-9">
@@ -106,4 +116,14 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#region,#province').select2({
+                placeholder: "Sélectionnez une option",
+                allowClear: true
+            });
+        });
+    </script>
 @endsection

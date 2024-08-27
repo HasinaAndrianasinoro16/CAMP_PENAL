@@ -12,10 +12,10 @@ use function Laravel\Prompts\table;
 class Users extends Model
 {
     protected $table = 'users';
-    protected $fillable = ['name','imatricule', 'email', 'password','usertype','province'];
+    protected $fillable = ['name','imatricule', 'email', 'password','usertype','province','region'];
 
 //    fonction pour enregistrer un nouveau utilisateurs
-    public static function SaveUsers($name,$imatricule, $email, $password, $province, $usertype)
+    public static function SaveUsers($name,$imatricule, $email, $password, $province, $usertype,$region)
     {
         try {
             $users = new Users();
@@ -25,6 +25,7 @@ class Users extends Model
             $users->password = Hash::make($password);
             $users->usertype = $usertype;
             $users->province = $province;
+            $users->region = $region;
             $users->save();
             return $users;
         }catch (\Exception $e){

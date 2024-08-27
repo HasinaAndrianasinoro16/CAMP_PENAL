@@ -39,7 +39,8 @@ class UsersController extends Controller
     {
         try {
             $provinces = Province::getProvince();
-            return view('AddUsers')->with('provinces', $provinces);
+            $regions = DB::table('region')->get();
+            return view('AddUsers')->with('provinces', $provinces)->with('regions', $regions);
         }catch (\Exception $exception){
             throw new \Exception( $exception->getMessage());
         }
@@ -65,6 +66,7 @@ class UsersController extends Controller
                 'password' => 'required|min:6',
                 'province' => 'required',
                 'position' => 'required',
+                'region' => 'required',
             ],[
                 'name.required' => "Le nom est obligatoire",
                 'name.max' => 'Le nom ne doit pas dépasser les 255 caractères',
@@ -78,9 +80,10 @@ class UsersController extends Controller
                 'password.min' => "Le mot de passe doit contenir au moins 6 caractères",
                 'province.required' => "La province est obligatoire",
                 'position.required' => "Le poste est obligatoire",
+                'region.required' => "la region est obligatoire",
             ]);
 
-            Users::SaveUsers(request('name'),\request('matricule'),request('email'),request('password'),request('province'),request('position'));
+            Users::SaveUsers(request('name'),\request('matricule'),request('email'),request('password'),request('province'),request('position'), request('region'));
 //            Users::SaveUsers(request(['name', 'email', 'password', 'province', 'position']));
             return redirect()->route('Utilisateur')->with('success', 'Utilisateur ajouté avec succès.');
         } catch (\Exception $exception) {
@@ -152,7 +155,7 @@ class UsersController extends Controller
     {
         try {
             $data =[
-                ['(ex:Jonh Doe, Analamanga,...','exampleEmail@gmail.com','le mot de passe de l\' utilisateur','(ex: DRAP, D.R.A.P, Agent ministere, minister,...','(ex: Antananarivo, Mahajanga, Fianarantsoa,..','son matricule']
+                ['(ex:Jonh Doe, Analamanga,...','exampleEmail@gmail.com','le mot de passe de l\' utilisateur','(ex: DRAP, D.R.A.P, Agent ministere, minister,...','(ex: Antananarivo, Mahajanga, Fianarantsoa,..','(ex: Analamanga,Itasy,...)','son matricule']
             ];
             return \Maatwebsite\Excel\Facades\Excel::download(new UserModel($data), 'Model_utilisateur.xlsx');
         }catch (\Exception $exception){

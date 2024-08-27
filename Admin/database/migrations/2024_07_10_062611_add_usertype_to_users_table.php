@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('province')->nullable();
             $table->integer('usertype')->default(0);
-            $table->foreign('province')->references('id')->on('province')->onDelete('cascade');
+//            $table->foreign('province')->references('id')->on('province')->onDelete('cascade');
+//            $table->foreign('localite')->references('id')->on('region')->onDelete('cascade');
         });
     }
 

@@ -30,8 +30,16 @@ class ImportUser implements ToModel,WithHeadingRow
             ->where('nom', 'ILIKE', $row['province'].'%')
             ->value('id');
 
+        $region = DB::table('region')
+            ->where('nom', 'ILIKE', $row['region'].'%')
+            ->value('id');
+
         if (!$province) {
             throw new \Exception("La province " . $row['province'] . " est introuvable.");
+        }
+
+        if (!$region) {
+            throw new \Exception("La region " . $row['region'] . " est introuvable.");
         }
 
         return new Users([
@@ -41,6 +49,7 @@ class ImportUser implements ToModel,WithHeadingRow
             'imatricule' => $row['imatricule'],
             'usertype' => $usertype,
             'province' => $province,
+            'region' => $region,
         ]);
     }
 

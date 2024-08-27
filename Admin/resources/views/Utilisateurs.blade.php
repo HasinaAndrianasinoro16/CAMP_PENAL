@@ -39,7 +39,7 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->matricule }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->position }}</td>
+                                <td>{{ $user->usertype == 1 ? $user->position .' '. $user->region : $user->position  }}</td>
                                 <td>{{ $user->province }}</td>
                                 <td>
                                     <a href="{{ route('UpdateUsers', ['id' => $user->id]) }}"><button class="btn btn-warning" ><i class="fas fa-pencil-square-o"></i></button></a>

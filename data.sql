@@ -42,6 +42,9 @@ create table region(
 ALTER TABLE users ADD COLUMN province INT;
 ALTER TABLE users ADD CONSTRAINT fk_province FOREIGN KEY (province) REFERENCES province(id);
 
+ALTER TABLE users add column region int;
+alter table users add constraint fk_region FOREIGN key (region) references region(id);
+
 create table collaborateur(
     id serial primary key,
     nom varchar(50)
@@ -243,9 +246,12 @@ select
     end as position,
     u.province as is_province,
     p.nom as province,
-    u.imatricule as matricule
+    u.imatricule as matricule,
+    u.region as id_region,
+    r.nom as region
 from users u
-join province p on p.id = u.province;
+join province p on p.id = u.province
+join region r on r.id = u.region;
 
 create or replace view v_camp as
 select 
