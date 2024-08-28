@@ -214,13 +214,13 @@ INSERT INTO region (nom) VALUES ('Bongolava');
 INSERT INTO region (nom) VALUES ('Haute Matsiatra');
 INSERT INTO region (nom) VALUES ('Amoron''i Mania');
 INSERT INTO region (nom) VALUES ('Vatovavy Fitovinany');
-INSERT INTO region (nom) VALUES ('Atsimo-Atsinanana');
+INSERT INTO region (nom) VALUES ('Atsimo Atsinanana');
 INSERT INTO region (nom) VALUES ('Ihorombe');
 INSERT INTO region (nom) VALUES ('Menabe');
-INSERT INTO region (nom) VALUES ('Atsimo-Andrefana');
+INSERT INTO region (nom) VALUES ('Atsimo Andrefana');
 INSERT INTO region (nom) VALUES ('Androy');
 INSERT INTO region (nom) VALUES ('Anosy');
-INSERT INTO region (nom) VALUES ('Alaotra-Mangoro');
+INSERT INTO region (nom) VALUES ('Alaotra Mangoro');
 INSERT INTO region (nom) VALUES ('Betsiboka');
 INSERT INTO region (nom) VALUES ('Boeny');
 INSERT INTO region (nom) VALUES ('Sofia');
@@ -228,6 +228,8 @@ INSERT INTO region (nom) VALUES ('Diana');
 INSERT INTO region (nom) VALUES ('Sava');
 INSERT INTO region (nom) VALUES ('Analanjirofo');
 INSERT INTO region (nom) VALUES ('Atsinanana');
+INSERT INTO region (nom) VALUES ('Melaky');
+
 
 
 --============================== View et fonction ===============================

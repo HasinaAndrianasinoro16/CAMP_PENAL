@@ -69,7 +69,7 @@
 <body>
 <div class="container">
     <div class="header">
-        <div class="user-info"><h1>D.R.A.P {{ Auth::user()->name }}</h1></div>
+        <div class="user-info"><h1>D.R.A.P {{ \Illuminate\Support\Facades\DB::table('region')->where('id',\Illuminate\Support\Facades\Auth::user()->region)->value('nom') }}</h1></div>
         <button id="export">PDF</button>
     </div>
     <table>
