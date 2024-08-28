@@ -17,8 +17,6 @@ class Messages extends Model
 
     public function from()
     {
-//        Auth::
-//        DB::
         return $this->belongsTo(User::class, 'from_id');
     }
 
