@@ -96,7 +96,7 @@ ALTER TABLE camp ADD CONSTRAINT fk_sol FOREIGN KEY (sol) REFERENCES sol(id);
 --detail en plus de chaque camp
 create table more(
     id serial,
-    camp varchar(255) references camp(id),
+    camp varchar(255) references camp(id) unique,
     situation int references situation(id),
     distance varchar(255),
     cultivable decimal,
