@@ -6,6 +6,7 @@ create database camppenal;
 
 --les differents type de sol a madagascar favorable au culture
 alter table users add column imatricule varchar(50);
+alter table users add column usertype integer;
 create table sol(
     id serial primary key,
     nom varchar(50)
@@ -105,8 +106,6 @@ create table more(
 );
 ALTER TABLE more ADD COLUMN region INT;
 ALTER TABLE more ADD CONSTRAINT fk_region FOREIGN KEY (region) REFERENCES region(id);
-
-crea
 
 create table don (
     id serial,
@@ -229,6 +228,8 @@ INSERT INTO region (nom) VALUES ('Sava');
 INSERT INTO region (nom) VALUES ('Analanjirofo');
 INSERT INTO region (nom) VALUES ('Atsinanana');
 INSERT INTO region (nom) VALUES ('Melaky');
+
+INSERT into materiel (nom) VALUES ('Argent');
 
 
 
