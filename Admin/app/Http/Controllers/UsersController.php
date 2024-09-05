@@ -95,8 +95,9 @@ class UsersController extends Controller
     {
         try {
             $province = DB::table('province')->get();
+            $region = DB::table('region')->get();
             $users = DB::table('v_user')->where('id','=',$id)->first();
-            return view('UpdateUsers')->with('provinces', $province)->with('users', $users);
+            return view('UpdateUsers')->with('provinces', $province)->with('users', $users)->with('regions',$region);
         }catch (\Exception $exception){
             throw new \Exception($exception->getMessage());
         }
@@ -114,6 +115,7 @@ class UsersController extends Controller
                 'password' => 'required|min:6',
                 'province' => 'required',
                 'position' => 'required',
+                'region' => 'required'
             ],[
                 'name.required' => "Le nom est obligatoire",
                 'name.max' => 'Le nom ne doit pas dépasser les 255 caractères',
@@ -127,9 +129,10 @@ class UsersController extends Controller
                 'password.min' => "Le mot de passe doit contenir au moins 6 caractères",
                 'province.required' => "La province est obligatoire",
                 'position.required' => "Le poste est obligatoire",
+                'region.required' => "La region est obligatoire"
             ]);
 
-            Users::UpdateUsers(\request('id'),\request('name'),\request('matricule'),\request('email'),\request('password'),request('province'),\request('position'));
+            Users::UpdateUsers(\request('id'),\request('name'),\request('matricule'),\request('email'),\request('password'),request('province'),\request('position'),\request('region'));
             return redirect()->route('Utilisateur')->with('success','Utilisateur modifier');
         }catch (\Exception $exception){
             return redirect()->back()->withErrors(['error' => $exception->getMessage()])->withInput();

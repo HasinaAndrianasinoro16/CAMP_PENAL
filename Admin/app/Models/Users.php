@@ -67,7 +67,7 @@ class Users extends Model
     }
 
     //fonction pour faire la modification des informations de l'utilisateur
-    public static function UpdateUsers ($id,$name,$imatricule, $email, $password, $province, $usertype)
+    public static function UpdateUsers ($id,$name,$imatricule, $email, $password, $province, $usertype, $region)
     {
         try {
             $pass = Hash::make($password);
@@ -79,6 +79,7 @@ class Users extends Model
                     'password' => $pass,
                     'usertype' => $usertype,
                     'province' => $province,
+                    'region' => $region,
                 ]);
             return $update;
         }catch (\Exception $exception){

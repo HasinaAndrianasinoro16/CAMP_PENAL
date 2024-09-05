@@ -62,6 +62,17 @@
 
                             <div class="form-group">
                                 <div class="col-9">
+                                    <label for="region" class="form-control-label">Region</label>
+                                    <select id="region" name="region" class="form-control">
+                                        @foreach($regions as $region)
+                                            <option value="{{ $region->id }}" {{ $users->id_region == $region->id ? 'selected' : '' }}>{{ $region->nom }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-9">
                                     <label for="Position" class="form-control-label">Position</label>
                                     <select id="Position" name="position" class="form-control">
                                         <option value="1" {{ $users->usertype == 1 ? 'selected' : '' }}>D.I.R.A.P</option>
