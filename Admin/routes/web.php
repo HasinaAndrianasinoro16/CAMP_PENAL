@@ -59,6 +59,8 @@ Route::get('/conversion/{user?}',[\App\Http\Controllers\MessageController::class
 
 Route::get('/Model-utilisateur',[\App\Http\Controllers\UsersController::class,'ModelUsers'])->middleware(['auth', 'verified','admin'])->name('modelUsers');
 
+Route::get('/Model-camp',[\App\Http\Controllers\CampController::class,'ModelCamp'])->middleware(['auth', 'verified','admin'])->name('modelCamp');
+
 Route::get('/Erreur',function (){
     return view('Error');
 });
@@ -85,6 +87,8 @@ Route::post('/Modifier-culture',[\App\Http\Controllers\CultureController::class,
 Route::post('/send',[\App\Http\Controllers\MessageController::class,'sendMessage'])->middleware(['auth', 'verified','admin'])->name('send');
 
 Route::post('/import-Utilisateur',[\App\Http\Controllers\UsersController::class,'importUsers'])->middleware(['auth', 'verified','admin'])->name('ImportUsers');
+
+Route::post('/import-Camp-penal',[\App\Http\Controllers\CampController::class,'ImportCamp'])->middleware(['auth', 'verified','admin'])->name('ImportCamp');
 
 //AUTRE
 Route::middleware('auth')->group(function () {

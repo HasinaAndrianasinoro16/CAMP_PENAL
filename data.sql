@@ -75,7 +75,7 @@ create table materiel(
 --liste des situations juridique
 create table situation(
     id serial primary key,
-    nom varchar(255)
+    nom varchar(255) unique
 );
 --liste des camp penal
 create sequence seqcamp increment by 1; 
@@ -163,6 +163,21 @@ CREATE TABLE stock_estimation (
     estimation NUMERIC(20, 4) ,
     datestock DATE ,
     etat INT 
+);
+
+create table importcamp(
+    id serial primary key,
+    nom varchar(50),
+    province varchar(50),
+    lattitude decimal,
+    longitude decimal,
+    sol varchar(50),
+    situation varchar(50),
+    distance varchar(50),
+    cultivable decimal,
+    ncultivable decimal,
+    litige decimal,
+    region varchar(55)
 );
 
 
@@ -529,3 +544,87 @@ JOIN
 GROUP BY 
     cm.nom, m.nom;
 
+
+-- --fonction pour enregistrer les importation de camp penal
+-- Create or replace FUNCTION insert_data_camp()
+-- RETURNS void as $$
+-- BEGIN
+
+--     --insrt des donnees de base dans la table camp
+--     insert into camp (nom, province, lattitude, longitude, sol)
+--     select
+--         'CAMP' || LPAD(nextval('seqcamp')::text, 3,'0') as id,
+--         ic.nom,
+--         ( SELECT id FROM province WHERE nom ILIKE ic.province ||'%') as province,
+--         ic.lattitude,
+--         ic.longitude,
+--         (select id from sol where nom ILIKE ic.sol || '%') as sol
+--     from 
+--         importcamp ic;
+
+--     --insertion des donnees en plus des camp penaux
+
+--     insert into more(camp, situation, distance, cultivable, ncultivable,litige, region)
+--     select
+--         (select id from camp where nom ILIKE ic.nom || '%') as camp,
+--         (select id from situation where nom ILIKE ic.situation || '%') as situation,
+--         ic.distance,
+--         ic.cultivable,
+--         ic.ncultivable,
+--         ic.litige,
+--         (select id from region where nom ILIKE ic.region || '%')
+--     from 
+--         importcamp ic;
+
+
+--     --apres fin des operations on supprime les donnees    
+--     delete from importcamp;
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- Fonction pour enregistrer les importations de camp pénal
+CREATE OR REPLACE FUNCTION insert_data_camp()
+RETURNS void AS $$
+BEGIN
+
+    -- Insertion des données de base dans la table camp
+    INSERT INTO camp (id, nom, province, lattitude, longitude, sol)
+    SELECT
+        'CAMP0' || LPAD(nextval('seqcamp')::text, 3, '0') AS id,
+        ic.nom,
+        (SELECT id FROM province WHERE nom ILIKE ic.province || '%') AS province,
+        ic.lattitude,
+        ic.longitude,
+        (SELECT id FROM sol WHERE nom ILIKE ic.sol || '%') AS sol
+    FROM
+        importcamp ic;
+
+    
+       --insertion des situation juridique  
+    INSERT INTO situation (nom)
+    SELECT DISTINCT ic.situation 
+    FROM importcamp ic
+    WHERE ic.situation NOT IN (SELECT nom FROM situation);
+
+    -- Insertion des données supplémentaires pour les camps pénaux
+    INSERT INTO more (camp, situation, distance, cultivable, ncultivable, litige, region)
+    SELECT
+        c.id AS camp,
+        (SELECT id FROM situation WHERE nom ILIKE ic.situation || '%') AS situation,
+        ic.distance,
+        ic.cultivable,
+        ic.ncultivable,
+        ic.litige,
+        (SELECT id FROM region WHERE nom ILIKE ic.region || '%') AS region
+    FROM
+        importcamp ic
+    JOIN
+        camp c ON c.nom = ic.nom;
+
+ 
+
+    -- Suppression des données après l'importation
+    DELETE FROM importcamp;
+
+END;
+$$ LANGUAGE plpgsql;

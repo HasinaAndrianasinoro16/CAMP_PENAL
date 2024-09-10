@@ -15,6 +15,45 @@
             </div>
             <div class="py-3"></div>
         </div>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        @if (session('success'))
+            <div class="alert alert-success w-6">
+                {{ session('success') }}
+            </div>
+        @endif
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title h3">Ajouter Camp penal (excel)</div>
+                    <div class="py-3"></div>
+                    <form action="{{ route('ImportCamp') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <div class="col-9">
+                                <label for="Nom" class="form-control-label">Veuiller selectionner le fichier excel/csv</label>
+                                <input type="file" class="form-control" name="csv_file" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="py-2"></div>
+                        <div class="form-group">
+                            <div class="col-9">
+                                <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-check"></i> Enregistrer</button>
+                                <a href="{{ route('modelCamp') }}" class="btn btn-warning btn-lg"><i class="fas fa-file-excel"></i> Telecharger le model Excel </a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">

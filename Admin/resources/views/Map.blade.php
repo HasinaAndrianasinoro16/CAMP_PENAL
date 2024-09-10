@@ -14,7 +14,11 @@
             </div>
             <div class="py-3"></div>
         </div>
-
+        @if (session('success'))
+            <div class="alert alert-success w-6">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="col-lg-12">
             <div class="row">
                     <div class="col-lg-12">
@@ -40,7 +44,7 @@
                                             <td>{{ $camp->sol }}</td>
                                             <td>
                                                 <a href="{{ route('UpdateCamp',['id' => $camp->id]) }}"><button class="btn btn-warning"><i class="fas fa-pencil-square-o"></i> </button></a>
-                                                <a href="{{ route('DeleteCamp',['id' => $camp->id]) }}"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>
+{{--                                                <a href="{{ route('DeleteCamp',['id' => $camp->id]) }}"><button class="btn btn-danger"><i class="fas fa-trash"></i></button></a>--}}
                                                 <a href="{{ route('DetailCamp',['id' => $camp->id]) }}"><button class="btn btn-primary" ><i class="fas fa-eye"></i></button></a>
                                                 <a href="{{ route('AddInfo',['id' => $camp->id]) }}"><button class="btn btn-success"><i class="fa fa-plus-circle"></i> </button> </a>
 {{--                                                <a href="{{ route('AddCulture',['id' => $camp->id]) }}"><button class="btn btn-success" ><i class="fas fa-plus-circle"></i></button></a>--}}

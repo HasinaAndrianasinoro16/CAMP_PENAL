@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CampModel;
+use App\Imports\CampImport;
 use App\Models\Camp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CampController extends Controller
 {
@@ -37,14 +40,24 @@ class CampController extends Controller
             $request->validate([
                 'nom' => 'required|max:255',
                 'province' => 'required',
-                'lat' => 'required',
-                'lng' => 'required',
+                'lat' => 'required|numeric',
+                'lng' => 'required|numeric',
                 'sol' => 'required',
+            ],[
+                'nom.required' => "Le nom est obligatoire",
+                'nom.max' => "le nom ne doit pas depasser les 255 carcatere",
+                'province.required' => "Le province est obligatoire",
+                'lat.required' => "La latitude doit etre obligatoire",
+                'lat.numeric' => "la latitude ne peut pas etre une chaine de caractere",
+                'lng.required' => "La longitude doit etre obligatoire",
+                'sol.required' => "La sol est obligatoire",
+                'lng.numeric' => "la longitude ne peut pas etre une chaine de caractere",
             ]);
             Camp::SaveCamp(\request('nom'),request('province'),request('lat'),request('lng'),\request('sol'));
-            return redirect()->route('Carte');
+            return redirect()->route('Carte')->with('success','le camp penal a bien ete enregistrer');
         }catch (\Exception $exception){
-            throw new \Exception($exception->getMessage());
+            return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite : ' . $exception->getMessage()]);
+//            throw new \Exception($exception->getMessage());
         }
     }
 //controller pour supprimer un camp
@@ -203,6 +216,36 @@ class CampController extends Controller
             return redirect()->back()->with('success', 'Info enregistrée avec succès');
         } catch (\Exception $exception) {
             return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite : ' . $exception->getMessage()]);
+        }
+    }
+
+    //controller pour importer les donnees des camp penaux
+    public function ImportCamp(Request $request)
+    {
+        try {
+            $file = $request->file('csv_file');
+            Excel::import(new CampImport(), $file);
+            DB::statement('SELECT insert_data_camp()');
+            return redirect()->route('Carte')->with('success','Les camp penaux on bien ete enregistrer avec succes');
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
+//            if ($exception->getCode() == '23505') {
+//                return null;
+//            }
+//            return redirect()->back()->withErrors(['error' => 'Une erreur s\'est produite : ' . $exception->getMessage()]);
+        }
+    }
+
+    //controller pour telechager le model de l'importation des camp penax
+    public function ModelCamp()
+    {
+        try {
+            $data = [
+              ['camp penal nom','Antananarivo, fianarantsoa,...','45,12374','67,5554','Argileux, limoneux,volcainque,...','Pas de dossier en cours,066-AB, T 01691-F,...','3km en voiture puis 2 km a pied','45,6','565,3','100','Analamange, SAVA,...']
+            ];
+            return Excel::download(new CampModel($data),'Model_Camp_import.xlsx');
+        }catch (\Exception $exception){
+            throw new \Exception($exception->getMessage());
         }
     }
 
