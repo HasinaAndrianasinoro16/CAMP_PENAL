@@ -17,7 +17,7 @@
                                          onclick="event.preventDefault();
                                                 this.closest('form').submit();">
                             <i class="zmdi zmdi-power"></i>
-                            {{ __('sign out') }}
+                            {{ __('deconnecter') }}
                         </x-dropdown-link>
                     </form>
                 </div>
